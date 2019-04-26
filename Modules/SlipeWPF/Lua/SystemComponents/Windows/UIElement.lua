@@ -1,0 +1,60 @@
+local UIElement = {}
+
+UIElement.__ctor__ = function(this)
+	this.children = {}
+end
+
+createProperties(UIElement, {
+	"IsMouseCaptureWithin",
+	"IsMouseDirectlyOver",
+	"IsMouseOver",
+	"IsStylusCaptured",
+	"IsStylusCaptureWithin",
+	"IsStylusDirectlyOver",
+	"IsStylusOver",
+	"IsVisible",
+	"Opacity",
+	"SnapsToDevicePixels",
+	"PersistId",
+	"RenderSize",
+	"RenderTransform",
+	"RenderTransformOrigin",
+	"TouchesCaptured",
+	"TouchesCapturedWithin",
+	"TouchesDirectlyOver",
+	"IsMouseCaptured",
+	"TouchesOver",
+	"OpacityMask",
+	"IsMeasureValid",
+	"AreAnyTouchesCaptured",
+	"IsKeyboardFocusWithin",
+	"Uid",
+	"Clip",
+	"CacheMode",
+	"BitmapEffectInput",
+	"BitmapEffect",
+	"AreAnyTouchesOver",
+	"AreAnyTouchesDirectlyOver",
+	"AreAnyTouchesCapturedWithin",
+	"AllowDrop",
+	"IsManipulationEnabled",
+	"DesiredSize",
+	"Focusable",
+	"HasAnimatedProperties",
+	"InputBindings",
+	"IsArrangeValid",
+	"IsEnabled",
+	"IsFocused",
+	"IsHitTestVisible",
+	"IsInputMethodEnabled",
+	"IsKeyboardFocused",
+	"Effect",
+	"Visibility",
+	"CommandBindings",
+	"ClipToBounds",
+	"StylusPlugIns",
+	"IsEnabledCore",
+	"HasEffectiveKeyboardFocus"
+})
+
+System.define("System.Windows.UIElement", UIElement)

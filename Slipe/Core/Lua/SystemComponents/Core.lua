@@ -226,6 +226,9 @@ local function setBase(cls, kind)
   else
     if extends then      
       local base = extends[1]
+      if (base == nil) then
+        print(debug.traceback())
+      end
       if base.class == "I" then
         cls.interface = extends
         setmetatable(cls, Object)
@@ -884,6 +887,9 @@ function System.ToInt64(v, checked)
 end
 
 function System.ToSingle(v, checked)
+  if type(v) == "string" or v == nil then
+    print(debug.traceback())
+  end
   if v >= -3.40282347E+38 and v <= 3.40282347E+38 then
     return v
   end
@@ -1425,8 +1431,8 @@ function System.init(namelist, conf)
     end
   end
 
-  -- modules = {}
-  -- usings = {}
+  modules = {}
+  usings = {}
   metadatas = nil
   curCacheName = nil
 end

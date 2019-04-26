@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <RootNamespace>WpfRenderer</RootNamespace>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>WpfRenderer</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SlipeClient">
+      <HintPath>..\..\..\..\Slipe\Core\DLL\SlipeClient.dll</HintPath>
+    </Reference>
+    <Reference Include="SlipeShared">
+      <HintPath>..\..\..\..\Slipe\Core\DLL\SlipeShared.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Cef\" />
+    <Folder Include="Dx\" />
+  </ItemGroup>
+</Project>

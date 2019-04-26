@@ -167,7 +167,7 @@ System.namespace("Slipe.Client", function (namespace)
     IsLineOfSightClear = function (this, start, end_, checkBuildings, checkVehicles, checkPeds, checkObjects, checkDummies, seeThroughStuff, ignoreSomeObjectsForCamera, ignoredElement)
       local default = ignoredElement
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       return SlipeMtaDefinitions.MtaClient.IsLineOfSightClear(start.X, start.Y, start.Z, end_.X, end_.Y, end_.Z, checkBuildings, checkVehicles, checkPeds, checkObjects, checkDummies, seeThroughStuff, ignoreSomeObjectsForCamera, default)
     end

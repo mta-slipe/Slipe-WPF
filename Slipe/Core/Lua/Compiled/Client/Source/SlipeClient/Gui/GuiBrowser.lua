@@ -23,7 +23,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     __ctor2__ = function (this, position, width, height, isLocal, isTransparent, relative, parent)
       local default = parent
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       __ctor1__(this, SlipeMtaDefinitions.MtaClient.GuiCreateBrowser(position.X, position.Y, width, height, isLocal, isTransparent, relative, default))
       this.browser = System.new(SlipeClientBrowsers.Browser, 2, SlipeMtaDefinitions.MtaClient.GuiGetBrowser(this.element))

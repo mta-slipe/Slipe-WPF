@@ -72,14 +72,14 @@ System.namespace("Slipe.Client.SightLines", function (namespace)
     getData = function (this)
       local default = this.IgnoredElement
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       return SlipeClientSightLines.SightLineData(SlipeMtaDefinitions.MtaClient.ProcessLineOfSight(this:getStartPosition().X, this:getStartPosition().Y, this:getStartPosition().Z, this:getEndPosition().X, this:getEndPosition().Y, this:getEndPosition().Z, this.CheckBuildings, this.CheckVehicles, this.CheckPeds, this.CheckWorldObjects, false, this.SeeThroughStuff, this.IgnoreSomeObjectsForCamera, this.ShootThroughStuff, default, this.IncludeWorldModelInformation, this.IncludeCarTyreHits))
     end
     getIsClear = function (this)
       local default = this.IgnoredElement
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       return SlipeMtaDefinitions.MtaClient.IsLineOfSightClear(this:getStartPosition().X, this:getStartPosition().Y, this:getStartPosition().Z, this:getEndPosition().X, this:getEndPosition().Y, this:getEndPosition().Z, this.CheckBuildings, this.CheckVehicles, this.CheckPeds, this.CheckWorldObjects, false, this.SeeThroughStuff, this.IgnoreSomeObjectsForCamera, default)
     end

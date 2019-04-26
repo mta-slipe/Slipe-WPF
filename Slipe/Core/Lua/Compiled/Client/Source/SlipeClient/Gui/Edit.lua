@@ -22,7 +22,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     __ctor2__ = function (this, position, dimensions, defaultContent, relative, parent, masked, maxLength)
       local default = parent
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       __ctor1__(this, SlipeMtaDefinitions.MtaClient.GuiCreateEdit(position.X, position.Y, dimensions.X, dimensions.Y, defaultContent, relative, default))
       setMasked(this, masked)

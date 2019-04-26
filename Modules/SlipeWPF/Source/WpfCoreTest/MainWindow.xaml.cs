@@ -19,12 +19,17 @@ namespace WpfCoreTest
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow// : Window
     {
         public MainWindow()
         {
             InitializeComponent();
             Debug.WriteLine("Test");
+        }
+
+        public void SetButtonText(string text)
+        {
+            this.button.Content = text;
         }
 
         private void ButtonExit_Click(object sender, RoutedEventArgs e)

@@ -21,7 +21,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     __ctor2__ = function (this, position, dimensions, horizontal, relative, parent)
       local default = parent
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       __ctor1__(this, SlipeMtaDefinitions.MtaClient.GuiCreateScrollBar(position.X, position.Y, dimensions.X, dimensions.Y, horizontal, relative, default))
     end

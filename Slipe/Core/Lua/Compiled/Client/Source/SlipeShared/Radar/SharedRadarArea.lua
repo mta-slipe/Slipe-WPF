@@ -26,7 +26,7 @@ System.namespace("Slipe.Shared.Radar", function (namespace)
     __ctor2__ = function (this, position, dimensions, color, visibleTo)
       local default = visibleTo
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       __ctor1__(this, SlipeMtaDefinitions.MtaShared.CreateRadarArea(position.X, position.Y, dimensions.X, dimensions.Y, color:getR(), color:getG(), color:getB(), color:getA(), default))
     end

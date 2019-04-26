@@ -25,7 +25,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     __ctor2__ = function (this, position, dimensions, caption, relative, parent)
       local default = parent
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       __ctor1__(this, SlipeMtaDefinitions.MtaClient.GuiCreateComboBox(position.X, position.Y, dimensions.X, dimensions.Y, caption, relative, default))
     end

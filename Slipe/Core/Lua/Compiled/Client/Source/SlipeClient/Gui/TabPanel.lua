@@ -23,7 +23,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     __ctor2__ = function (this, position, dimensions, relative, parent)
       local default = parent
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       __ctor1__(this, SlipeMtaDefinitions.MtaClient.GuiCreateTabPanel(position.X, position.Y, dimensions.X, dimensions.Y, relative, default))
     end

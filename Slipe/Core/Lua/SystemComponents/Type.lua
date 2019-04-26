@@ -392,6 +392,9 @@ function System.as(obj, cls)
 end
 
 function System.cast(cls, obj)
+  if (cls == nil) then
+    print(debug.traceback())
+  end
   if obj == nil then
     if cls.class ~= "S" then
       return nil

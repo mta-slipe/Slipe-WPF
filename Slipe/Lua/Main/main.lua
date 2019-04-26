@@ -20,6 +20,9 @@ end
 end
 
 function prepareManifest(filepath)
+	if not fileExists(filepath) then
+		return
+	end
 	System.init = prepareInit	
 	local file = fileOpen(filepath)
 	local content = fileRead(file, fileGetSize(file))
@@ -29,6 +32,9 @@ function prepareManifest(filepath)
 end
 
 function finalizeManifest(filepath)
+	if not fileExists(filepath) then
+		return
+	end
 	System.init = finalizeInit
 	local file = fileOpen(filepath)
 	local content = fileRead(file, fileGetSize(file))
@@ -42,6 +48,7 @@ function prepareModule(path)
 	prepareManifest(path)
 end
 prepareModule("Slipe/Core")
+prepareModule("Modules/SlipeWPF")
 
 local mainManifest = triggerServerEvent == nil and "Dist/Server/manifest.lua" or "Dist/Client/manifest.lua"
 finalizeManifest(mainManifest)
@@ -49,13 +56,16 @@ finalizeManifest(mainManifest)
 function runEntryPoint()
 	local stringEntryPoint = System.entryPoint
 
+	if stringEntryPoint == nil then
+		return
+	end
+
 	local splits = split(stringEntryPoint, ".") 
 	local result = _G 
 	for _, split in ipairs(splits) do 
 		result = result[split] 
 	end
 	result()
+	initEvents()
 end
 runEntryPoint()
-
-initEvents()

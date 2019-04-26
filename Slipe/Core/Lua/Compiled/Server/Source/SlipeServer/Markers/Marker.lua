@@ -23,7 +23,7 @@ System.namespace("Slipe.Server.Markers", function (namespace)
     __ctor2__ = function (this, position, type, color, size, visibleTo)
       local default = visibleTo
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       __ctor1__(this, SlipeMtaDefinitions.MtaServer.CreateMarker(position.X, position.Y, position.Z, type:ToEnumString(SlipeSharedMarkers.MarkerType):ToLower(), size, color:getR(), color:getG(), color:getB(), color:getA(), default))
     end

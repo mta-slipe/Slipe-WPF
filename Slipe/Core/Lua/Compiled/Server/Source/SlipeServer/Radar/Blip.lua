@@ -23,7 +23,7 @@ System.namespace("Slipe.Server.Radar", function (namespace)
     __ctor2__ = function (this, vector, icon, color, size, ordering, visibleDistance, visibleTo)
       local default = visibleTo
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       __ctor1__(this, SlipeMtaDefinitions.MtaServer.CreateBlip(vector.X, vector.Y, vector.Z, icon, size, color:getR(), color:getG(), color:getB(), color:getA(), ordering, visibleDistance, default))
     end
@@ -39,7 +39,7 @@ System.namespace("Slipe.Server.Radar", function (namespace)
     __ctor4__ = function (this, physicalElement, icon, color, size, ordering, visibleDistance, visibleTo)
       local default = visibleTo
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       __ctor1__(this, SlipeMtaDefinitions.MtaServer.CreateBlipAttachedTo(physicalElement:getMTAElement(), icon, size, color:getR(), color:getG(), color:getB(), color:getA(), ordering, visibleDistance, default))
     end

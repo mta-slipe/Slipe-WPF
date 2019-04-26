@@ -16,7 +16,7 @@ System.namespace("Slipe.Server.Explosions", function (namespace)
     Create = function (position, type, creator)
       local default = creator
       if default ~= nil then
-        default = default.getMTAElement()
+        default = default:getMTAElement()
       end
       return SlipeMtaDefinitions.MtaServer.CreateExplosion(position.X, position.Y, position.Z, type, default)
     end
