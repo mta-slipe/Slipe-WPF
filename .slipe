@@ -171,7 +171,12 @@
         "Windows/Controls/ComboBoxItem.lua",
         "Windows/Controls/RadioButton.lua",
         "Windows/Window.lua",
-        "Windows/Application.lua"
+        "Windows/Application.lua",
+        "EventArgs.lua",
+        "Windows/RoutedEventArgs.lua",
+        "Windows/Input/InputEventArgs.lua",
+        "Windows/Input/MouseEventArgs.lua",
+        "Windows/Input/MouseButtonEventArgs.lua"
       ],
       "backingLua": [],
       "assetDirectories": [

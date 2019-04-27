@@ -30,7 +30,7 @@ local function CreateWpfElement(xmlElement)
 			end
 		else
 			outputDebugString(key .. " is an unsupported WPF attribute on " .. name)
-			wpfElement[key] = value
+			-- wpfElement[key] = value
 		end
 	end
 
@@ -51,7 +51,7 @@ local function CreateWpfNodes(component, xmlElement, i, parent)
 	local wpfElement = CreateWpfElement(xmlElement)
 	parent.children[#parent.children + 1] = wpfElement
 	if (xmlElement:GetAttribute("x:Name") ~= nil) then
-		component:Connect(wpfElement, i)
+		component:Connect(i, wpfElement)
 		i = i + 1
 	end
 	

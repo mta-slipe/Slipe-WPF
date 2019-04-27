@@ -9,3 +9,11 @@ function createProperties(class, properties)
 		end
 	end
 end
+
+function createEvents(class, events)
+	for _, event in pairs(events) do
+		class["add" .. event] = function(this, value)
+			this[event] = this[event] + value
+		end
+	end
+end

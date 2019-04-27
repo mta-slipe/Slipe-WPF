@@ -1,5 +1,4 @@
 function initEvents()
-	print(triggerServerEvent == nil)
 	local unpack = unpack
 	local tInsert = table.insert
 

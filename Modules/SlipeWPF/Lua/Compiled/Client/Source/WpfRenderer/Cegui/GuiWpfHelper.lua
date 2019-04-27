@@ -13,17 +13,25 @@ System.namespace("WpfRenderer.Cegui", function (namespace)
     local AttachHandlers, CreateChildren
     AttachHandlers = function (guiElement, wpfElement)
       guiElement.OnClick = guiElement.OnClick + function (eventButton, buttonState, mousePosition)
-        wpfElement.Click(wpfElement, System.Windows.RoutedEventArgs());
+        if wpfElement.Click then
+            wpfElement:Click(wpfElement, System.Windows.RoutedEventArgs());
+        end
       end
       guiElement.OnDoubleClick = guiElement.OnDoubleClick + function (button, buttonState, mousePosition)
         local wpfButton = button == 0 --[[MouseButton.Left]] and 0 --[[MouseButton.Left]] or button == 1 --[[MouseButton.Middle]] and 1 --[[MouseButton.Middle]] or button == 2 --[[MouseButton.Right]] and 2 --[[MouseButton.Right]] or 0 --[[MouseButton.Left]]
-        wpfElement.MouseDoubleClick(wpfElement, System.Windows.Input.MouseButtonEventArgs(nil, 0, wpfButton));
+        if wpfElement.MouseDoubleClick then
+            wpfElement:MouseDoubleClick(wpfElement, System.Windows.Input.MouseButtonEventArgs(nil, 0, wpfButton));
+        end
       end
       guiElement.OnMouseEnter = guiElement.OnMouseEnter + function (mousePosition, previousHoverGuiElement)
-        wpfElement.MouseEnter(wpfElement, System.Windows.Input.MouseEventArgs(nil, 0));
+        if wpfElement.MouseEnter then
+            wpfElement:MouseEnter(wpfElement, System.Windows.Input.MouseEventArgs(nil, 0));
+        end
       end
       guiElement.OnMouseLeave = guiElement.OnMouseLeave + function (mousePosition, nextHoverGuiElement)
-        wpfElement.MouseLeave(wpfElement, System.Windows.Input.MouseEventArgs(nil, 0));
+        if wpfElement.MouseLeave then
+            wpfElement:MouseLeave(wpfElement, System.Windows.Input.MouseEventArgs(nil, 0));
+        end
       end
     end
     CreateChildren = function (guiElement, wpfElement)

@@ -33,9 +33,6 @@ System.namespace("Slipe.Shared.Elements", function (namespace)
       return SlipeSharedElements.ElementManager.getInstance():getRoot()
     end
     getMTAElement = function (this)
-      if (this == nil) then
-        print(debug.traceback())
-      end
       return this.element
     end
     getType = function (this)

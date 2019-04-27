@@ -21,6 +21,11 @@ namespace WpfRenderer.Cegui.Elements
             )
         {
             GuiWpfHelper.AttachHandlers(this, block);
+
+            this.OnChanged += () =>
+            {
+                block.Text = this.Content;
+            };
         }
 
         public WpfGuiEdit(PasswordBox block, Gui.GuiElement parent)
@@ -34,6 +39,11 @@ namespace WpfRenderer.Cegui.Elements
         {
             this.Masked = true;
             GuiWpfHelper.AttachHandlers(this, block);
+
+            this.OnChanged += () =>
+            {
+                block.Password = this.Content;
+            };
         }
     }
 }

@@ -18,4 +18,8 @@ createProperties(ButtonBase, {
 	"IsEnabledCore",
 })
 
+createEvents(ButtonBase, {
+	"Click",
+})
+
 System.define("System.Windows.Controls.Primitives.ButtonBase", ButtonBase)

@@ -14,11 +14,19 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
     __ctor1__ = function (this, block, parent)
       SlipeClientGui.Edit.__ctor__[2](this, SystemNumerics.Vector2(System.ToSingle(block:getMargin():getLeft()), System.ToSingle(block:getMargin():getTop())), SystemNumerics.Vector2(System.ToSingle(block:getWidth()), System.ToSingle(block:getHeight())), block:getText(), false, parent, false, 128)
       WpfRendererCegui.GuiWpfHelper.AttachHandlers(this, block)
+
+      this.OnChanged = this.OnChanged + function ()
+        block:setText(this:getContent())
+      end
     end
     __ctor2__ = function (this, block, parent)
       SlipeClientGui.Edit.__ctor__[2](this, SystemNumerics.Vector2(System.ToSingle(block:getMargin():getLeft()), System.ToSingle(block:getMargin():getTop())), SystemNumerics.Vector2(System.ToSingle(block:getWidth()), System.ToSingle(block:getHeight())), block:getPassword(), false, parent, false, 128)
       this:setMasked(true)
       WpfRendererCegui.GuiWpfHelper.AttachHandlers(this, block)
+
+      this.OnChanged = this.OnChanged + function ()
+        block:setPassword(this:getContent())
+      end
     end
     return {
       __inherits__ = function (out)

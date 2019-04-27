@@ -19,7 +19,9 @@ namespace WpfRenderer.Cegui
             guiElement.OnClick += (MouseButton eventButton, MouseButtonState buttonState, Vector2 mousePosition) =>
             {
                 /*[[
-                wpfElement.Click(wpfElement, System.Windows.RoutedEventArgs());
+                if wpfElement.Click then
+                    wpfElement:Click(wpfElement, System.Windows.RoutedEventArgs());
+                end
                 ]]*/
             };
             guiElement.OnDoubleClick += (MouseButton button, MouseButtonState buttonState, Vector2 mousePosition) =>
@@ -30,19 +32,25 @@ namespace WpfRenderer.Cegui
                     button == MouseButton.Right ? System.Windows.Input.MouseButton.Right :
                     System.Windows.Input.MouseButton.Left;
                 /*[[
-                wpfElement.MouseDoubleClick(wpfElement, System.Windows.Input.MouseButtonEventArgs(nil, 0, wpfButton));
+                if wpfElement.MouseDoubleClick then
+                    wpfElement:MouseDoubleClick(wpfElement, System.Windows.Input.MouseButtonEventArgs(nil, 0, wpfButton));
+                end
                 ]]*/
             };
             guiElement.OnMouseEnter += (Vector2 mousePosition, Gui.GuiElement previousHoverGuiElement) =>
             {
                 /*[[
-                wpfElement.MouseEnter(wpfElement, System.Windows.Input.MouseEventArgs(nil, 0));
+                if wpfElement.MouseEnter then
+                    wpfElement:MouseEnter(wpfElement, System.Windows.Input.MouseEventArgs(nil, 0));
+                end
                 ]]*/
             };
             guiElement.OnMouseLeave += (Vector2 mousePosition, Gui.GuiElement nextHoverGuiElement) =>
             {
                 /*[[
-                wpfElement.MouseLeave(wpfElement, System.Windows.Input.MouseEventArgs(nil, 0));
+                if wpfElement.MouseLeave then
+                    wpfElement:MouseLeave(wpfElement, System.Windows.Input.MouseEventArgs(nil, 0));
+                end
                 ]]*/
             };
         }

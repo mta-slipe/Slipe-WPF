@@ -13,15 +13,21 @@ FrameworkElement.LoadXaml = function(this, xmlNode)
 	else
 		this:setMargin(System.Windows.Thickness(0, 0, 0, 0))
 	end
+
 	if xmlNode.attributes["Width"] then
 		this:setWidth(tonumber(xmlNode.attributes["Width"]))
 	else
 		this:setWidth(100)
 	end
+
 	if xmlNode.attributes["Height"] then
 		this:setHeight(tonumber(xmlNode.attributes["Height"]))
 	else
 		this:setHeight(18)
+	end
+	
+	if xmlNode.attributes["x:Name"] then
+		this:setName(xmlNode.attributes["x:Name"])
 	end
 end
 
@@ -63,6 +69,22 @@ createProperties(FrameworkElement,{
 	"object DefaultStyleKey",
 	"InheritanceBehavior",
 	"LogicalChildren",
+	"x:Name",
+})
+
+createEvents(FrameworkElement, {
+	"ToolTipClosing",
+	"ToolTipOpening",
+	"Unloaded",
+	"DataContextChanged",
+	"SizeChanged",
+	"RequestBringIntoView",
+	"SourceUpdated",
+	"TargetUpdated",
+	"Loaded",
+	"Initialized",
+	"ContextMenuClosing",
+	"ContextMenuOpening",
 })
 
 System.define("System.Windows.FrameworkElement", FrameworkElement)

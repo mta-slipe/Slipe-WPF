@@ -2,7 +2,9 @@
 using Slipe.Client.Gui;
 using Slipe.Client.IO;
 using Slipe.Shared.Elements;
+using Slipe.Shared.IO;
 using System;
+using System.Numerics;
 using WpfCoreTest;
 using WpfRenderer;
 using WpfRenderer.Cegui;
@@ -13,6 +15,8 @@ namespace ClientSide
     {
         static void Main(string[] args)
         {
+            //new A();
+
             new ElementManager(new ElementHelper());
             new Program();
         }
@@ -23,11 +27,13 @@ namespace ClientSide
 
             MainWindow window = new MainWindow();
             Window guiWindow = CeguiWpfRenderer.Render(window);
+            Cursor.SetVisible(guiWindow.Visible);
             // guiWindow.Visible = false;
 
             new CommandHandler("wpf", (string command, string[] arguments) =>
             {
                 guiWindow.Visible = !guiWindow.Visible;
+                Cursor.SetVisible(guiWindow.Visible);
             });
             new CommandHandler("wpftest", (string command, string[] arguments) =>
             {
