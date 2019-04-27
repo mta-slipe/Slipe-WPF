@@ -10,7 +10,7 @@ System.import(function (out)
 end)
 System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
   namespace.class("WpfGuiEdit", function (namespace)
-    local __ctor1__, __ctor2__
+    local UpdateContent, __ctor1__, __ctor2__
     __ctor1__ = function (this, block, parent)
       SlipeClientGui.Edit.__ctor__[2](this, SystemNumerics.Vector2(System.ToSingle(block:getMargin():getLeft()), System.ToSingle(block:getMargin():getTop())), SystemNumerics.Vector2(System.ToSingle(block:getWidth()), System.ToSingle(block:getHeight())), block:getText(), false, parent, false, 128)
       WpfRendererCegui.GuiWpfHelper.AttachHandlers(this, block)
@@ -18,6 +18,8 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
       this.OnChanged = this.OnChanged + function ()
         block:setText(this:getContent())
       end
+
+      block:addTextChanged(System.fn(this, UpdateContent))
     end
     __ctor2__ = function (this, block, parent)
       SlipeClientGui.Edit.__ctor__[2](this, SystemNumerics.Vector2(System.ToSingle(block:getMargin():getLeft()), System.ToSingle(block:getMargin():getTop())), SystemNumerics.Vector2(System.ToSingle(block:getWidth()), System.ToSingle(block:getHeight())), block:getPassword(), false, parent, false, 128)
@@ -26,6 +28,13 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
 
       this.OnChanged = this.OnChanged + function ()
         block:setPassword(this:getContent())
+      end
+
+      block:addPasswordChanged(System.fn(this, UpdateContent))
+    end
+    UpdateContent = function (this, content)
+      if this:getContent() ~= content then
+        this:setContent(content)
       end
     end
     return {

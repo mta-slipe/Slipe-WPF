@@ -40,6 +40,7 @@ namespace WpfCoreTest
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine(string.Format("Text value is: {0}", textBox.Text));
+            textBox.Text = "";
         }
     }
 }

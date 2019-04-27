@@ -6,6 +6,13 @@ function createProperties(class, properties)
 		end
 		class["set" .. property] = function(this, value)
 			this[property] = value
+			if this[property .. "Changed"] then
+				this[property .. "Changed"](value)
+			end
+		end
+		
+		class["add" .. property .. "Changed"] = function(this, value)
+			this[property .. "Changed"] = this[property .. "Changed"] + value
 		end
 	end
 end
@@ -16,4 +23,5 @@ function createEvents(class, events)
 			this[event] = this[event] + value
 		end
 	end
+
 end

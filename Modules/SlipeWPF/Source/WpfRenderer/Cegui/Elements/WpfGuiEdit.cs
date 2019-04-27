@@ -26,6 +26,10 @@ namespace WpfRenderer.Cegui.Elements
             {
                 block.Text = this.Content;
             };
+
+            /*[[
+            block:addTextChanged(System.fn(this, UpdateContent))
+            ]]*/
         }
 
         public WpfGuiEdit(PasswordBox block, Gui.GuiElement parent)
@@ -44,6 +48,18 @@ namespace WpfRenderer.Cegui.Elements
             {
                 block.Password = this.Content;
             };
+
+            /*[[
+            block:addPasswordChanged(System.fn(this, UpdateContent))
+            ]]*/
         }
+
+        private void UpdateContent(string content) {
+            if (this.Content != content)
+            {
+                this.Content = content;
+            }
+        }
+
     }
 }
