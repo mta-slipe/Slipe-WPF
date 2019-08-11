@@ -74,8 +74,8 @@ limitations under the License.
         <method name="ToString" Template="{this}:ToEnumString({class})" />
       </class>
       <class name="DateTime">
-        <method name=".ctor" ArgCount="4" />
-        <method name=".ctor">
+        <method name=".ctor" ArgCount="4" Baned="true" />
+        <method name=".ctor" Baned="true">
           <arg type="System.Int32" />
           <arg type="System.Int32" />
           <arg type="System.Int32" />
@@ -84,7 +84,7 @@ limitations under the License.
           <arg type="System.Int32" />
           <arg type="System.Globalization.Calendar" />
         </method>
-        <method name=".ctor">
+        <method name=".ctor" Baned="true">
           <arg type="System.Int32" />
           <arg type="System.Int32" />
           <arg type="System.Int32" />
@@ -94,7 +94,7 @@ limitations under the License.
           <arg type="System.Int32" />
           <arg type="System.Globalization.Calendar" />
         </method>
-        <method name=".ctor" ArgCount="9" />
+        <method name=".ctor" ArgCount="9" Baned="true" />
         <method name=".ctor" Template="System.DateTime({0}, {1}, {2}, {3}, {4}, {5}, 0, {6})">
           <arg type="System.Int32" />
           <arg type="System.Int32" />
@@ -196,9 +196,9 @@ limitations under the License.
           <arg type="System.Type" />
           <arg type="System.Boolean" />
         </method>
-        <method name="CreateInstance" ArgCount="3" />
-        <method name="CreateInstance" ArgCount="5" />
-        <method name="CreateInstance" ArgCount="6" />
+        <method name="CreateInstance" ArgCount="3" Baned="true" />
+        <method name="CreateInstance" ArgCount="5" Baned="true" />
+        <method name="CreateInstance" ArgCount="6" Baned="true" />
       </class>
       <class name="Tuple">
         <method name="Create" ArgCount="1" Template="System.tuple({0})" />

@@ -80,7 +80,6 @@ namespace WpfRenderer.Cegui.Elements
             for (int i = 0; i < childCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(this.box, i);
-                var name = this.box.GetType().Name;
                 if ((string)(child as ComboBoxItem).Content == value)
                 {
                     Slipe.MtaDefinitions.MtaClient.GuiComboBoxSetSelected(this.MTAElement, i);

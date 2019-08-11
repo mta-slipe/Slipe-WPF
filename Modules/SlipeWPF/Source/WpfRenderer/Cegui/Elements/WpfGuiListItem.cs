@@ -15,8 +15,11 @@ namespace WpfRenderer.Cegui.Elements
     {
         public WpfGuiListItem(ListBoxItem item, Gui.GuiElement parent) 
         {
-            Gui.GridList list = (Gui.GridList)parent;
-            int row = MtaClient.GuiGridListAddRow(list.MTAElement, (string)item.Content, "");
+            WpfGuiList list = (WpfGuiList)parent;
+            new Gui.GridItem(list.Column, list.AddRow(), list)
+            {
+                Content = (string)item.Content
+            };
         }
     }
 }

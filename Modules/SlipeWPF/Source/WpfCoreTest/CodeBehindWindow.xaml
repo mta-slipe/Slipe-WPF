@@ -16,11 +16,11 @@
                 <Grid Background="#FFE5E5E5">
                     <CheckBox x:Name="checkBox_Copy" Content="CheckBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckBox_Copy_Checked"/>
                     <CheckBox x:Name="checkBox" Content="CheckBox" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top"/>
-                    <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="111" VerticalAlignment="Top" Width="165" Margin="250,10,0,0">
+                    <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="111" VerticalAlignment="Top" Width="165" Margin="250,10,0,0" SelectionChanged="ListBox_SelectionChanged">
                         <ListBoxItem Content="ListBoxItem 1"/>
                         <ListBoxItem Content="ListBoxItem 2"/>
                         <ListBoxItem Content="ListBoxItem 3"/>
-                        <ListBoxItem Content="ListBoxItem 4 "/>
+                        <ListBoxItem Content="ListBoxItem 4"/>
                         <ListBoxItem Content="ListBoxItem 5"/>
                     </ListBox>
                     <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="171" Margin="10,50,0,0" SelectionChanged="ComboBox_SelectionChanged" SelectedIndex="0">

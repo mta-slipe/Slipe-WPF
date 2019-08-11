@@ -42,9 +42,9 @@ namespace ClientSide
                 }
                 window.SetButtonText(arguments[0]);
             });
-            new CommandHandler("wpfcombo", (string command, string[] arguments) =>
+            new CommandHandler("wpfitems", (string command, string[] arguments) =>
             {
-                window.SetSelectedItem();
+                window.SetSelectedItems();
             });
         }
     }

@@ -58,7 +58,6 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
       local childCount = SystemWindowsMedia.VisualTreeHelper.GetChildrenCount(this.box)
       for i = 0, childCount - 1 do
         local child = SystemWindowsMedia.VisualTreeHelper.GetChild(this.box, i)
-        local name = this.box:GetType():getName()
         if System.cast(System.String, (System.as(child, SystemWindowsControls.ComboBoxItem)):getContent()) == value then
           SlipeMtaDefinitions.MtaClient.GuiComboBoxSetSelected(this:getMTAElement(), i)
         end

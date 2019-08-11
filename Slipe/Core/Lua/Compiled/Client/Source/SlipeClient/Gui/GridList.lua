@@ -46,7 +46,10 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     end
     getSelectedItem = function (this)
       local item = SlipeMtaDefinitions.MtaClient.GuiGridListGetSelectedItem(this.element)
-      return SlipeClientGui.GridItem(this.columns:get(item[1]), this.rows:get(item[2]), this)
+      if item[1] == - 1 or item[2] == - 1 then
+        return nil
+      end
+      return SlipeClientGui.GridItem(this.columns:get(item[2]), this.rows:get(item[1]), this)
     end
     setSelectedItem = function (this, value)
       SlipeMtaDefinitions.MtaClient.GuiGridListSetSelectedItem(this.element, value.Row.ID, value.Column.ID, true)

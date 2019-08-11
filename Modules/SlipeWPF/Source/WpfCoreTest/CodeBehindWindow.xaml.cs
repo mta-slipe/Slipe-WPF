@@ -36,10 +36,15 @@ namespace WpfCoreTest
             this.button.Content = text;
         }
 
-        public void SetSelectedItem()
+        public void SetSelectedItems()
         {
             this.comboBox.SelectedValue = "ComboBoxItem 2";
             //this.comboBox.SelectedItem = VisualTreeHelper.GetChild(this.comboBox, 1);
+            this.listBox.SelectedValue = "ListBoxItem 4";
+            this.radioButton1.IsChecked = true;
+
+            this.checkBox.IsChecked = false;
+            this.checkBox_Copy.IsChecked = true;
         }
 
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
@@ -71,6 +76,11 @@ namespace WpfCoreTest
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ChatBox.WriteLine($"Tab control: {tabControl.SelectedValue}");
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ChatBox.WriteLine($"List box: {listBox.SelectedValue}");
         }
     }
 }
