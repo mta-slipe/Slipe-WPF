@@ -10,10 +10,17 @@ System.import(function (out)
 end)
 System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
   namespace.class("WpfGuiLabel", function (namespace)
-    local __ctor__
+    local UpdateContent, __ctor__
     __ctor__ = function (this, block, parent)
       SlipeClientGui.Label.__ctor__[2](this, SystemNumerics.Vector2(System.ToSingle(block:getMargin():getLeft()), System.ToSingle(block:getMargin():getTop())), SystemNumerics.Vector2(System.ToSingle(block:getWidth()), System.ToSingle(block:getHeight())), block:getText(), false, parent)
       WpfRendererCegui.GuiWpfHelper.AttachHandlers(this, block)
+
+      block:addTextChanged(System.fn(this, UpdateContent))
+    end
+    UpdateContent = function (this, content)
+      if this:getContent() ~= content then
+        this:setContent(content)
+      end
     end
     return {
       __inherits__ = function (out)
@@ -25,7 +32,8 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
       __metadata__ = function (out)
         return {
           methods = {
-            { ".ctor", 0x206, nil, System.Windows.Controls.TextBlock, out.Slipe.Client.Gui.GuiElement }
+            { ".ctor", 0x206, nil, System.Windows.Controls.TextBlock, out.Slipe.Client.Gui.GuiElement },
+            { "UpdateContent", 0x101, UpdateContent, System.String }
           },
           class = { 0x4 }
         }

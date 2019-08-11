@@ -67,5 +67,10 @@ namespace WpfCoreTest
         {
             ChatBox.WriteLine($"RadioButton: {radioButton.IsChecked}");
         }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ChatBox.WriteLine($"Tab control: {tabControl.SelectedValue}");
+        }
     }
 }

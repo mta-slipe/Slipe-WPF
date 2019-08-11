@@ -21,6 +21,18 @@ namespace WpfRenderer.Cegui.Elements
             )
         {
             GuiWpfHelper.AttachHandlers(this, block);
+
+            /*[[
+            block:addTextChanged(System.fn(this, UpdateContent))
+            ]]*/
+        }
+
+        private void UpdateContent(string content)
+        {
+            if (this.Content != content)
+            {
+                this.Content = content;
+            }
         }
     }
 }
