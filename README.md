@@ -4,7 +4,12 @@ The goal of Slipe WPF is to bring support for Microsoft's Windows Presentation F
 
 Slipe WPF is still a an experimental stage.
 
+## Getting started
+
+First you will need to add the SlipeWPF module to your project, you can do this with: `slipe import-module https://mta-slipe.com/downloads/SlipeWPF.zip`
+
 ## Compiling
+
 When compiling the Slipe WPF module it's important to include the `-generated` option in the compile command. Otherwise generated `.g.cs` will not be included. For example:  
 `slipe compile -module SlipeWPF -client-only -generated`
 

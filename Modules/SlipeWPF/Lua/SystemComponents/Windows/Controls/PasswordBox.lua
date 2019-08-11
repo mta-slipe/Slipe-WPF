@@ -8,7 +8,7 @@ end
 
 PasswordBox.LoadXaml = function(this, xmlNode)
 	System.Windows.Controls.Control.LoadXaml(this, xmlNode)
-	this:setText(xmlNode.attributes["Text"])
+	this:setPassword(xmlNode.attributes["Password"])
 end
 
 createProperties(PasswordBox, {
