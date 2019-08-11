@@ -12,7 +12,7 @@
   </Target>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Modules\SlipeWPF\Source\WpfCoreTest\WpfCoreTest.csproj" />
+    <ProjectReference Include="..\..\Source\WpfCoreTest\WpfCoreTest.csproj" />
     <ProjectReference Include="..\..\Modules\SlipeWPF\Source\WpfRenderer\WpfRenderer.csproj" />
   </ItemGroup>
 

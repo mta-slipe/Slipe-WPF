@@ -1,10 +1,14 @@
 # Slipe WPF
 Slipe WPF is a first party module for [Slipe](https://mta-slipe.com).  
-The goal of Slipe WPF is to bring support for Microsoft's Windows Presentation Foundation to Slipe.  
+The goal of Slipe WPF is to bring support for Microsoft's Windows Presentation Foundation to Slipe. 
+
+Slipe WPF is still a an experimental stage.
 
 ## Compiling
 When compiling the Slipe WPF module it's important to include the `-generated` option in the compile command. Otherwise generated `.g.cs` will not be included. For example:  
 `slipe compile -module SlipeWPF -client-only -generated`
+
+Also, you will need to to mark your WPF project project as `"BlockEntryPoint": true` in your `.slipe` file.
 
 ## What's implemented
 Since WPF as a library is huge we have not implemented every single control and method, or even every approach to the frameorok. 

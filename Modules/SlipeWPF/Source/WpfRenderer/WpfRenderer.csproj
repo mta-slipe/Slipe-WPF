@@ -22,6 +22,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cd ..\..\..\..\ &amp;&amp; slipe compile -module SlipeWPF -generated -client-only" />
+    <Exec Command="cd ..\..\..\..\ &amp;&amp; slipe compile -module SlipeWPF -client-only" />
   </Target>
 </Project>

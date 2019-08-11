@@ -23,7 +23,7 @@ end
 end
 
 function prepareManifest(filepath)
-	if (not fileExists(filepath)) then
+	if not fileExists(filepath) then
 		return
 	end
 	System.init = prepareInit	
@@ -35,7 +35,7 @@ function prepareManifest(filepath)
 end
 
 function finalizeManifest(filepath)
-	if (not fileExists(filepath)) then
+	if not fileExists(filepath) then
 		return
 	end
 	System.init = finalizeInit

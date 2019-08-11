@@ -12,10 +12,10 @@
 
   <ItemGroup>
     <Reference Include="SlipeClient">
-      <HintPath>..\..\..\..\Slipe\Core\DLL\SlipeClient.dll</HintPath>
+      <HintPath>..\..\Slipe\Core\DLL\SlipeClient.dll</HintPath>
     </Reference>
     <Reference Include="SlipeShared">
-      <HintPath>..\..\..\..\Slipe\Core\DLL\SlipeShared.dll</HintPath>
+      <HintPath>..\..\Slipe\Core\DLL\SlipeShared.dll</HintPath>
     </Reference>
   </ItemGroup>
 

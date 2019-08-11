@@ -1,10 +1,20 @@
 {
   "compileTargets": {
     "client": [
-      "ClientSide"
+      {
+        "path": "ClientSide",
+        "BlockEntryPoint": null
+      },
+      {
+        "path": "WpfCoreTest",
+        "BlockEntryPoint": true
+      }
     ],
     "server": [
-      "ServerSide"
+      {
+        "path": "ServerSide",
+        "BlockEntryPoint": null
+      }
     ]
   },
   "dlls": [],
@@ -14,6 +24,11 @@
       "path": "Assets",
       "downloads": false,
       "extension": null
+    },
+    {
+      "path": "Source/WpfCoreTest",
+      "downloads": true,
+      "extension": ".xaml"
     }
   ],
   "modules": [
@@ -116,8 +131,10 @@
       "path": "Modules/SlipeWPF",
       "compileTargets": {
         "client": [
-          "Source/WpfRenderer",
-          "Source/WpfCoreTest"
+          {
+            "path": "Source/WpfRenderer",
+            "BlockEntryPoint": null
+          }
         ],
         "server": []
       },
@@ -186,13 +203,7 @@
         "Windows/Input/MouseButtonEventArgs.lua"
       ],
       "backingLua": [],
-      "assetDirectories": [
-        {
-          "path": "Source/WpfCoreTest",
-          "downloads": true,
-          "extension": ".xaml"
-        }
-      ]
+      "assetDirectories": []
     }
   ],
   "exports": [],

@@ -23,8 +23,6 @@ namespace WpfCoreTest
     /// </summary>
     public partial class CodeBehindWindow// : Window
     {
-        //public MainViewModel ViewModel;
-
         public CodeBehindWindow()
         {
             InitializeComponent();
