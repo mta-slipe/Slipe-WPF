@@ -55,6 +55,30 @@ namespace WpfRenderer.Cegui
                 end
                 ]]*/
             };
+
+
+            /*[[
+            wpfElement:addWidthChanged(function(...) UpdateWidth(guiElement, ...) end)
+
+            wpfElement:addHeightChanged(function(...) UpdateHeight(guiElement, ...) end)
+
+            wpfElement:addMarginChanged(function(...) UpdateMargin(guiElement, ...) end)
+            ]]*/
+        }
+
+        static void UpdateWidth(Gui.GuiElement element, float width)
+        {
+            element.Size = new Vector2(width, element.Size.Y);
+        }
+
+        static void UpdateHeight(Gui.GuiElement element, float height)
+        {
+            element.Size = new Vector2(element.Size.X, height);
+        }
+
+        static void UpdateMargin(Gui.GuiElement element, Thickness margin)
+        {
+            element.Position = new Vector2((float)margin.Left, (float)margin.Top);
         }
 
         public static void CreateChildren(Gui.GuiElement guiElement, FrameworkElement wpfElement)
