@@ -7,8 +7,8 @@ return function (out)
 
     -- load all files
     load("Source.WpfCoreTest.obj.Debug.netcoreapp3_0.App_g")
+    load("Source.WpfCoreTest.obj.Debug.netcoreapp3_0.CodeBehindWindow_g")
     load("Source.WpfCoreTest.obj.Debug.netcoreapp3_0.MainWindow_g")
-    load("Source.WpfCoreTest.TestWindowPartial1")
     load("Source.WpfRenderer.Cegui.CeguiWpfRenderer")
     load("Source.WpfRenderer.Cegui.Elements.WpfGuiButton")
     load("Source.WpfRenderer.Cegui.Elements.WpfGuiCheckbox")
@@ -31,8 +31,8 @@ return function (out)
   System.init({
     "WpfRenderer.Cegui.Elements.WpfGuiDummy",
     "WpfCoreTest.App",
+    "WpfCoreTest.CodeBehindWindow",
     "WpfCoreTest.MainWindow",
-    "WpfCoreTesto.MainWindow",
     "WpfRenderer.Cegui.CeguiWpfRenderer",
     "WpfRenderer.Cegui.Elements.WpfGuiButton",
     "WpfRenderer.Cegui.Elements.WpfGuiCheckbox",

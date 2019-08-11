@@ -9,7 +9,7 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiEdit: Gui.Edit
+    internal class WpfGuiEdit: Gui.Edit
     {
         public WpfGuiEdit(TextBox block, Gui.GuiElement parent)
             : base(
@@ -22,7 +22,7 @@ namespace WpfRenderer.Cegui.Elements
         {
             GuiWpfHelper.AttachHandlers(this, block);
 
-            this.OnChanged += () =>
+            this.OnChanged += (source, args) =>
             {
                 block.Text = this.Content;
             };
@@ -44,7 +44,7 @@ namespace WpfRenderer.Cegui.Elements
             this.Masked = true;
             GuiWpfHelper.AttachHandlers(this, block);
 
-            this.OnChanged += () =>
+            this.OnChanged += (source, args) =>
             {
                 block.Password = this.Content;
             };

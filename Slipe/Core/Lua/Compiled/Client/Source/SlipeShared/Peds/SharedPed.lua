@@ -2,12 +2,14 @@
 local System = System
 local SlipeMtaDefinitions
 local SlipeSharedElements
+local SlipeSharedHelpers
 local SlipeSharedPeds
 local SlipeSharedVehicles
 local SlipeSharedWeapons
 System.import(function (out)
   SlipeMtaDefinitions = Slipe.MtaDefinitions
   SlipeSharedElements = Slipe.Shared.Elements
+  SlipeSharedHelpers = Slipe.Shared.Helpers
   SlipeSharedPeds = Slipe.Shared.Peds
   SlipeSharedVehicles = Slipe.Shared.Vehicles
   SlipeSharedWeapons = Slipe.Shared.Weapons
@@ -22,7 +24,8 @@ System.namespace("Slipe.Shared.Peds", function (namespace)
     setOnFire, getIsOnGround, getHasJetpack, getTarget, getWalkingStyle, setWalkingStyle, getWeapon, getAmmoInClip, 
     getTotalAmmo, IsClothesSlotTattoo, AddClothes, AddClothes1, AddClothes2, GetClothesModel, GetClothesTexture, RemoveClothes, 
     GetWeaponInSlot, GetAmmoInClip, GetTotalAmmo, SetAnimation, ResetAnimation, SetAnimationProgress, SetAnimationSpeed, GedStat, 
-    SetStat, Kill, Kill1, Kill2, RemoveFromVehicle, WarpIntoVehicle, WarpIntoVehicle1, __ctor__
+    SetStat, Kill, Kill1, Kill2, RemoveFromVehicle, WarpIntoVehicle, WarpIntoVehicle1, FaceElement, 
+    IsValidSkin, class, __ctor__
     __ctor__ = function (this, element)
       SlipeSharedElements.PhysicalElement.__ctor__(this, element)
     end
@@ -37,7 +40,7 @@ System.namespace("Slipe.Shared.Peds", function (namespace)
     end
     getContactElement = function (this)
       local default, extern = System.try(function ()
-        return true, System.cast(SlipeSharedElements.PhysicalElement, SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaShared.GetPedContactElement(this.element)))
+        return true, SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaShared.GetPedContactElement(this.element), SlipeSharedElements.PhysicalElement)
       end, function (default)
         if System.is(default, SlipeMtaDefinitions.MtaException) then
           return true, nil
@@ -54,7 +57,7 @@ System.namespace("Slipe.Shared.Peds", function (namespace)
     end
     getOccupiedVehicle = function (this)
       local default, extern = System.try(function ()
-        return true, System.cast(SlipeSharedVehicles.SharedVehicle, SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaShared.GetPedOccupiedVehicle(this.element)))
+        return true, SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaShared.GetPedOccupiedVehicle(this.element), SlipeSharedVehicles.SharedVehicle)
       end, function (default)
         if System.is(default, SlipeMtaDefinitions.MtaException) then
           return true, nil
@@ -118,7 +121,7 @@ System.namespace("Slipe.Shared.Peds", function (namespace)
     end
     getTarget = function (this)
       local default, extern = System.try(function ()
-        return true, System.cast(SlipeSharedElements.PhysicalElement, SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaShared.GetPedTarget(this.element)))
+        return true, SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaShared.GetPedTarget(this.element), SlipeSharedElements.PhysicalElement)
       end, function (default)
         if System.is(default, SlipeMtaDefinitions.MtaException) then
           return true, nil
@@ -284,7 +287,21 @@ System.namespace("Slipe.Shared.Peds", function (namespace)
     WarpIntoVehicle1 = function (this, vehicle)
       return SlipeMtaDefinitions.MtaShared.WarpPedIntoVehicle(this.element, vehicle:getMTAElement(), 0)
     end
-    return {
+    -- <summary>
+    -- Make this ped face a specific physical element
+    -- </summary>
+    FaceElement = function (this, target)
+      this:setRotation(SlipeSharedHelpers.NumericHelper.RotationBetweenPositions(target:getPosition(), this:getPosition()))
+    end
+    -- <summary>
+    -- Get if a skin id is valid
+    -- </summary>
+    -- <returns></returns>
+    IsValidSkin = function (model)
+      local models = SlipeMtaDefinitions.MtaShared.GetListFromTable(SlipeMtaDefinitions.MtaShared.GetValidPedModels(), "System.Int32")
+      return models:Contains(model)
+    end
+    class = {
       __inherits__ = function (out)
         return {
           out.Slipe.Shared.Elements.PhysicalElement
@@ -337,7 +354,64 @@ System.namespace("Slipe.Shared.Peds", function (namespace)
       RemoveFromVehicle = RemoveFromVehicle,
       WarpIntoVehicle = WarpIntoVehicle,
       WarpIntoVehicle1 = WarpIntoVehicle1,
-      __ctor__ = __ctor__
+      FaceElement = FaceElement,
+      IsValidSkin = IsValidSkin,
+      __ctor__ = __ctor__,
+      __metadata__ = function (out)
+        return {
+          properties = {
+            { "AmmoInClip", 0x206, System.Int32, getAmmoInClip },
+            { "Armor", 0x206, System.Single, getArmor },
+            { "Chocking", 0x206, System.Boolean, getChocking },
+            { "ContactElement", 0x206, out.Slipe.Shared.Elements.PhysicalElement, getContactElement },
+            { "DoingGangDriveby", 0x106, System.Boolean, getDoingGangDriveby, setDoingGangDriveby },
+            { "FightingStyle", 0x206, System.Int32, getFightingStyle },
+            { "HasJetpack", 0x206, System.Boolean, getHasJetpack },
+            { "Headless", 0x106, System.Boolean, getHeadless, setHeadless },
+            { "IsDead", 0x206, System.Boolean, getIsDead },
+            { "IsDucked", 0x206, System.Boolean, getIsDucked },
+            { "IsInVehicle", 0x206, System.Boolean, getIsInVehicle },
+            { "IsOnGround", 0x206, System.Boolean, getIsOnGround },
+            { "OccupiedVehicle", 0x206, out.Slipe.Shared.Vehicles.SharedVehicle, getOccupiedVehicle },
+            { "OnFire", 0x106, System.Boolean, getOnFire, setOnFire },
+            { "Target", 0x206, out.Slipe.Shared.Elements.PhysicalElement, getTarget },
+            { "TotalAmmo", 0x206, System.Int32, getTotalAmmo },
+            { "VehicleSeat", 0x206, System.Int32, getVehicleSeat },
+            { "WalkingStyle", 0x106, System.Int32, getWalkingStyle, setWalkingStyle },
+            { "Weapon", 0x206, out.Slipe.Shared.Weapons.SharedWeaponModel, getWeapon },
+            { "WeaponSlot", 0x106, System.Int32, getWeaponSlot, setWeaponSlot }
+          },
+          methods = {
+            { ".ctor", 0x106, nil, out.Slipe.MtaDefinitions.MtaElement },
+            { "AddClothes", 0x386, AddClothes, System.Int32, System.Int32, System.Int32, System.Boolean },
+            { "AddClothes", 0x286, AddClothes1, System.Int32, System.Int32, System.Boolean },
+            { "AddClothes", 0x286, AddClothes2, System.Int32, System.Int32, System.Boolean },
+            { "FaceElement", 0x106, FaceElement, out.Slipe.Shared.Elements.PhysicalElement },
+            { "GedStat", 0x186, GedStat, System.Int32, System.Single },
+            { "GetAmmoInClip", 0x186, GetAmmoInClip, System.Int32, System.Int32 },
+            { "GetClothesModel", 0x186, GetClothesModel, System.Int32, System.Int32 },
+            { "GetClothesTexture", 0x186, GetClothesTexture, System.Int32, System.Int32 },
+            { "GetTotalAmmo", 0x186, GetTotalAmmo, System.Int32, System.Int32 },
+            { "GetWeaponInSlot", 0x186, GetWeaponInSlot, System.Int32, out.Slipe.Shared.Weapons.SharedWeaponModel },
+            { "IsClothesSlotTattoo", 0x183, IsClothesSlotTattoo, System.Int32, System.Boolean },
+            { "IsValidSkin", 0x18E, IsValidSkin, System.Int32, System.Boolean },
+            { "Kill", 0x486, Kill, class, out.Slipe.Shared.Weapons.SharedWeaponModel, System.Int32, System.Boolean, System.Boolean },
+            { "Kill", 0x186, Kill1, class, System.Boolean },
+            { "Kill", 0x86, Kill2, System.Boolean },
+            { "RemoveClothes", 0x186, RemoveClothes, System.Int32, System.Boolean },
+            { "RemoveFromVehicle", 0x86, RemoveFromVehicle, System.Boolean },
+            { "ResetAnimation", 0x86, ResetAnimation, System.Boolean },
+            { "SetAnimation", 0x786, SetAnimation, out.Slipe.Shared.Peds.Animation, System.Boolean, System.Int32, System.Boolean, System.Boolean, System.Boolean, System.Int32, System.Boolean },
+            { "SetAnimationProgress", 0x286, SetAnimationProgress, out.Slipe.Shared.Peds.Animation, System.Single, System.Boolean },
+            { "SetAnimationSpeed", 0x286, SetAnimationSpeed, out.Slipe.Shared.Peds.Animation, System.Single, System.Boolean },
+            { "SetStat", 0x286, SetStat, System.Int32, System.Single, System.Boolean },
+            { "WarpIntoVehicle", 0x286, WarpIntoVehicle, out.Slipe.Shared.Vehicles.SharedVehicle, System.Int32, System.Boolean },
+            { "WarpIntoVehicle", 0x186, WarpIntoVehicle1, out.Slipe.Shared.Vehicles.SharedVehicle, System.Boolean }
+          },
+          class = { 0x6 }
+        }
+      end
     }
+    return class
   end)
 end)

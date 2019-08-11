@@ -9,15 +9,19 @@ System.namespace("Slipe.Shared.GameWorld", function (namespace)
   -- Struct to define different heat haze properties in the GTA world
   -- </summary>
   namespace.struct("HeatHaze", function (namespace)
-    local FromRaw, class, __ctor1__, __ctor2__, __ctor3__
-    __ctor1__ = function (this)
+    local FromRaw, class, internal, __ctor1__, __ctor2__
+    internal = function (this)
       this.ScanSize = System.default(SystemNumerics.Vector2)
       this.RenderSize = System.default(SystemNumerics.Vector2)
     end
     -- <summary>
     -- Create a heat haze struct
     -- </summary>
-    __ctor2__ = function (this, intensity, randomShift, speedMin, speedMax, scanSize, renderSize, showInside)
+    __ctor1__ = function (this, intensity, randomShift, speedMin, speedMax, scanSize, renderSize, showInside)
+      internal(this)
+      if intensity == nil then
+        return
+      end
       this.Intensity = intensity
       this.RandomShift = randomShift
       this.SpeedMin = speedMin
@@ -29,14 +33,14 @@ System.namespace("Slipe.Shared.GameWorld", function (namespace)
     -- <summary>
     -- Heat haze with optional paramters as default
     -- </summary>
-    __ctor3__ = function (this, intensity, randomShift, speedMin, speedMax)
-      __ctor2__(this, intensity, randomShift, speedMin, speedMax, SystemNumerics.Vector2(75, 80), SystemNumerics.Vector2(80, 85), false)
+    __ctor2__ = function (this, intensity, randomShift, speedMin, speedMax)
+      __ctor1__(this, intensity, randomShift, speedMin, speedMax, SystemNumerics.Vector2(75, 80), SystemNumerics.Vector2(80, 85), false)
     end
     -- <summary>
     -- Creates a heat haze from the raw MTA function output
     -- </summary>
     FromRaw = function (raw)
-      return System.new(class, 2, raw[1], raw[2], raw[3], raw[4], SystemNumerics.Vector2(raw[5], raw[6]), SystemNumerics.Vector2(raw[7], raw:getRest()[1]), raw:getRest()[2])
+      return class(raw[1], raw[2], raw[3], raw[4], SystemNumerics.Vector2(raw[5], raw[6]), SystemNumerics.Vector2(raw[7], raw:getRest()[1]), raw:getRest()[2])
     end
     class = {
       Intensity = 0,
@@ -47,9 +51,26 @@ System.namespace("Slipe.Shared.GameWorld", function (namespace)
       FromRaw = FromRaw,
       __ctor__ = {
         __ctor1__,
-        __ctor2__,
-        __ctor3__
-      }
+        __ctor2__
+      },
+      __metadata__ = function (out)
+        return {
+          properties = {
+            { "Intensity", 0x6, System.Int32 },
+            { "RandomShift", 0x6, System.Int32 },
+            { "RenderSize", 0x6, System.Numerics.Vector2 },
+            { "ScanSize", 0x6, System.Numerics.Vector2 },
+            { "ShowInside", 0x6, System.Boolean },
+            { "SpeedMax", 0x6, System.Int32 },
+            { "SpeedMin", 0x6, System.Int32 }
+          },
+          methods = {
+            { ".ctor", 0x706, __ctor1__, System.Int32, System.Int32, System.Int32, System.Int32, System.Numerics.Vector2, System.Numerics.Vector2, System.Boolean },
+            { ".ctor", 0x406, __ctor2__, System.Int32, System.Int32, System.Int32, System.Int32 },
+            { "FromRaw", 0x18E, FromRaw, System.Tuple, class }
+          }
+        }
+      end
     }
     return class
   end)

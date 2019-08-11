@@ -14,7 +14,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
   -- </summary>
   namespace.class("ComboBox", function (namespace)
     local getItemCount, getOpen, setOpen, getSelected, setSelected, Clear, AddItem, RemoveItem, 
-    __ctor1__, __ctor2__
+    class, __ctor1__, __ctor2__
     __ctor1__ = function (this, element)
       SlipeClientGui.GuiElement.__ctor__(this, element)
       this.items = DictInt32ComboBoxItem()
@@ -55,7 +55,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     -- </summary>
     AddItem = function (this, content)
       local item = SlipeClientGui.ComboBoxItem(content, this)
-      this.items:Add(item.ID, item)
+      this.items:AddKeyValue(item.ID, item)
       return item
     end
     -- <summary>
@@ -63,12 +63,12 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     -- </summary>
     RemoveItem = function (this, item)
       if SlipeMtaDefinitions.MtaClient.GuiComboBoxRemoveItem(this.element, item.ID) then
-        this.items:Remove(item.ID)
+        this.items:RemoveKey(item.ID)
         return true
       end
       return false
     end
-    return {
+    class = {
       __inherits__ = function (out)
         return {
           out.Slipe.Client.Gui.GuiElement
@@ -85,7 +85,31 @@ System.namespace("Slipe.Client.Gui", function (namespace)
       __ctor__ = {
         __ctor1__,
         __ctor2__
-      }
+      },
+      __metadata__ = function (out)
+        return {
+          fields = {
+            { "items", 0x1, System.Dictionary(System.Int32, out.Slipe.Client.Gui.ComboBoxItem) }
+          },
+          properties = {
+            { "ItemCount", 0x206, System.Int32, getItemCount },
+            { "Open", 0x106, System.Boolean, getOpen, setOpen },
+            { "Selected", 0x106, out.Slipe.Client.Gui.ComboBoxItem, getSelected, setSelected }
+          },
+          methods = {
+            { ".ctor", 0x106, __ctor1__, out.Slipe.MtaDefinitions.MtaElement },
+            { ".ctor", 0x506, __ctor2__, System.Numerics.Vector2, System.Numerics.Vector2, System.String, System.Boolean, out.Slipe.Client.Gui.GuiElement },
+            { "AddItem", 0x186, AddItem, System.String, out.Slipe.Client.Gui.ComboBoxItem },
+            { "Clear", 0x86, Clear, System.Boolean },
+            { "RemoveItem", 0x186, RemoveItem, out.Slipe.Client.Gui.ComboBoxItem, System.Boolean }
+          },
+          events = {
+            { "OnAccepted", 0x6, System.Delegate(class, out.Slipe.Client.Gui.Events.OnAcceptedEventArgs, System.Void) }
+          },
+          class = { 0x6, System.new(out.Slipe.Shared.Elements.DefaultElementClassAttribute, 2, 15 --[[ElementType.GuiComboBox]]) }
+        }
+      end
     }
+    return class
   end)
 end)

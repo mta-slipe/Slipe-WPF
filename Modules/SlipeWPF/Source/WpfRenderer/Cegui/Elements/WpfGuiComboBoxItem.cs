@@ -9,7 +9,7 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiComboBoxItem: Gui.ComboBoxItem
+    internal class WpfGuiComboBoxItem: Gui.ComboBoxItem
     {
         public WpfGuiComboBoxItem(ComboBoxItem box, Gui.GuiElement parent)
             : base(

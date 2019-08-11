@@ -92,7 +92,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     -- </summary>
     AddColumn = function (this, title, width)
       local column = SlipeClientGui.GridColumn(title, width, this)
-      this.columns:Add(column.ID, column)
+      this.columns:AddKeyValue(column.ID, column)
       return column
     end
     -- <summary>
@@ -100,7 +100,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     -- </summary>
     RemoveColumn = function (this, column)
       if SlipeMtaDefinitions.MtaClient.GuiGridListRemoveColumn(this.element, column.ID) then
-        this.columns:Remove(column.ID)
+        this.columns:RemoveKey(column.ID)
         return true
       end
       return false
@@ -110,7 +110,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     -- </summary>
     AddRow = function (this)
       local row = SlipeClientGui.GridRow(this)
-      this.rows:Add(row.ID, row)
+      this.rows:AddKeyValue(row.ID, row)
       return row
     end
     -- <summary>
@@ -118,7 +118,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     -- </summary>
     AddRowAfter = function (this, row)
       local newRow = System.new(SlipeClientGui.GridRow, 2, this, row.ID)
-      this.rows:Add(newRow.ID, newRow)
+      this.rows:AddKeyValue(newRow.ID, newRow)
       return newRow
     end
     -- <summary>
@@ -126,7 +126,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     -- </summary>
     AddTopRow = function (this)
       local row = System.new(SlipeClientGui.GridRow, 2, this, - 1)
-      this.rows:Add(row.ID, row)
+      this.rows:AddKeyValue(row.ID, row)
       return row
     end
     -- <summary>
@@ -134,7 +134,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
     -- </summary>
     RemoveRow = function (this, row)
       if SlipeMtaDefinitions.MtaClient.GuiGridListRemoveRow(this.element, row.ID) then
-        this.rows:Remove(row.ID)
+        this.rows:RemoveKey(row.ID)
         return true
       end
       return false
@@ -181,7 +181,40 @@ System.namespace("Slipe.Client.Gui", function (namespace)
       __ctor__ = {
         __ctor1__,
         __ctor2__
-      }
+      },
+      __metadata__ = function (out)
+        return {
+          fields = {
+            { "columns", 0x1, System.Dictionary(System.Int32, out.Slipe.Client.Gui.GridColumn) },
+            { "rows", 0x1, System.Dictionary(System.Int32, out.Slipe.Client.Gui.GridRow) }
+          },
+          properties = {
+            { "ColumnCount", 0x206, System.Int32, getColumnCount },
+            { "HorizontalScrollPosition", 0x106, System.Single, getHorizontalScrollPosition, setHorizontalScrollPosition },
+            { "RowCount", 0x206, System.Int32, getRowCount },
+            { "SelectedCount", 0x206, System.Int32, getSelectedCount },
+            { "SelectedItem", 0x106, out.Slipe.Client.Gui.GridItem, getSelectedItem, setSelectedItem },
+            { "SelectedItems", 0x206, System.Array(out.Slipe.Client.Gui.GridItem), getSelectedItems },
+            { "SelectionMode", 0x306, System.Int32, setSelectionMode },
+            { "SortingEnabled", 0x306, System.Boolean, setSortingEnabled },
+            { "VerticalScrollPosition", 0x106, System.Single, getVerticalScrollPosition, setVerticalScrollPosition }
+          },
+          methods = {
+            { ".ctor", 0x106, __ctor1__, out.Slipe.MtaDefinitions.MtaElement },
+            { ".ctor", 0x406, __ctor2__, System.Numerics.Vector2, System.Numerics.Vector2, System.Boolean, out.Slipe.Client.Gui.GuiElement },
+            { "AddColumn", 0x286, AddColumn, System.String, System.Single, out.Slipe.Client.Gui.GridColumn },
+            { "AddRow", 0x86, AddRow, out.Slipe.Client.Gui.GridRow },
+            { "AddRowAfter", 0x186, AddRowAfter, out.Slipe.Client.Gui.GridRow, out.Slipe.Client.Gui.GridRow },
+            { "AddTopRow", 0x86, AddTopRow, out.Slipe.Client.Gui.GridRow },
+            { "Clear", 0x86, Clear, System.Boolean },
+            { "GetItem", 0x286, GetItem, out.Slipe.Client.Gui.GridColumn, out.Slipe.Client.Gui.GridRow, out.Slipe.Client.Gui.GridItem },
+            { "RemoveColumn", 0x186, RemoveColumn, out.Slipe.Client.Gui.GridColumn, System.Boolean },
+            { "RemoveRow", 0x186, RemoveRow, out.Slipe.Client.Gui.GridRow, System.Boolean },
+            { "UseScrollBars", 0x286, UseScrollBars, System.Boolean, System.Boolean, System.Boolean }
+          },
+          class = { 0x6, System.new(out.Slipe.Shared.Elements.DefaultElementClassAttribute, 2, 17 --[[ElementType.GuiGridList]]) }
+        }
+      end
     }
   end)
 end)

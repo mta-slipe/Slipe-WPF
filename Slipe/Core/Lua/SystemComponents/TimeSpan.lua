@@ -50,6 +50,14 @@ local function subtract(this, ts)
   return TimeSpan(this.ticks - ts.ticks)
 end
 
+local function negate(this) 
+  local ticks = this.ticks
+  if ticks == -9223372036854775808 then
+    throw(OverflowException("Overflow_NegateTwosCompNum"))
+  end
+  return TimeSpan(-ticks)
+end
+
 local function interval(value, scale)
   if value ~= value then 
     throw(ArgumentException("Arg_CannotBeNaN"))
@@ -59,67 +67,78 @@ local function interval(value, scale)
   if millis > 922337203685477 or millis < -922337203685477 then
     throw(OverflowException("Overflow_TimeSpanTooLong"))
   end
-  return TimeSpan(trunc(millis) * 1e4)
+  return TimeSpan(trunc(millis) * 10000)
+end
+
+local function getPart(this, i, j)
+  local t = this.ticks
+  local v = div(t, i) % j
+  if v ~= 0 and t < 0 then
+    return v - j
+  end
+  return v
 end
 
 local function parse(s)
-  if s == nil then
-    return nil, 1
-  end
-  local v = tonumber(s)
-  if v ~= nil then
-    if v ~= floor(v) then
-      return nil, 2
-    end
-    return TimeSpan.FromDays(v)
-  end
-  local i, j, day,  hour, minute, second, milliseconds
-  i, j, day, hour, minute = sfind(s, "^%s*(%d+)%.(%d+):(%d+)")
-  if i == nil then
-    i, j, hour, minute = sfind(s, "^%s*(%d+):(%d+)")
-    if i == nil then
-      return nil, 2
-    else
-      hour, minute = tonumber(hour), tonumber(minute)
-    end
-    day = 0
+  if s == nil then return nil, 1 end
+  local i, j, k, sign, ch
+  local day, hour, minute, second, milliseconds = 0, 0, 0, 0, 0
+  i, j, sign, day = sfind(s, "^%s*([-]?)(%d+)")
+  if not i then return end
+  k = j + 1
+  i, j, ch = sfind(s, "^([%.:])", k)
+  if not i then 
+    i, j = sfind(s, "^%s*$", k)
+    if not i then return end
+    k = -1
   else
-    day, hour, minute = tonumber(day), tonumber(hour), tonumber(minute)
-  end
-  if j < #s then
-    local next = j + 1
-    i, j, second = sfind(s, "^:(%d+)", next)
-    if i == nil then
-      if sfind(s, "^%s*$", next) == nil then
-        return nil, 2
-      else
-        second = 0
-        milliseconds = 0
-      end
+    k = j + 1
+    if ch == '.' then
+      i, j, hour, minute = sfind(s, "^(%d+):(%d+)", k)
+      if not i then return end
+      k = j + 1
+      i, j, second = sfind(s, "^:(%d+)", k)
+      if not i then return end
     else
-      second = tonumber(second)
-      next = j + 1
-      i, j, milliseconds = sfind(s, "^%.(%d+)%s*$", next)
-      if i == nil then
-        if sfind(s, "^%s*$", next) == nil then
-          return nil, 2
-        else
-          milliseconds = 0
+      i, j, hour = sfind(s, "^(%d+)", k)
+      if not i then return end
+      k = j + 1
+      i, j, minute = sfind(s, "^:(%d+)", k)
+      if not i then
+        i, j = sfind(s, "^%s*$", k)
+        if not i then
+          return
         end
+        day, hour, minute = 0, day, hour
+        k = -1
       else
-        milliseconds = tonumber(milliseconds)
-        local n = floor(log10(milliseconds) + 1)
-        if n > 3 then
-          if n > 7 then
-            return nil, 2
-          end
-          milliseconds = milliseconds / (10 ^ (n - 3))
+        k = j
+        i, j, second = sfind(s, "^:(%d+)", k + 1)
+        if not i then
+          day, hour, minute, second = 0, day, hour, minute
+          j = k
         end
       end
     end
-  else
-    second = 0
-    milliseconds = 0
+  end
+  if k ~= -1 then
+    k = j + 1
+    i, j, milliseconds = sfind(s, "^%.(%d+)%s*$", k)
+    if not i then
+      i, j = sfind(s, "^%s*$", k)
+      if not i then return end
+      milliseconds = 0
+    else
+      milliseconds = tonumber(milliseconds)
+      local n = floor(log10(milliseconds) + 1)
+      if n > 3 then
+        if n > 7 then return end
+        milliseconds = milliseconds / (10 ^ (n - 3))
+      end
+    end
+  end
+  if sign == '-' then
+    day, hour, minute, second, milliseconds = -day, -hour, -minute, -second, -milliseconds
   end
   return TimeSpan(day, hour, minute, second, milliseconds)
 end
@@ -135,13 +154,13 @@ TimeSpan = System.defStc("System.TimeSpan", {
       ticks = ...
     elseif length == 3 then
       local hours, minutes, seconds = ...
-      ticks = (((hours * 60 + minutes) * 60) + seconds) * 1e7
+      ticks = (((hours * 60 + minutes) * 60) + seconds) * 10000000
     elseif length == 4 then
       local days, hours, minutes, seconds = ...
-      ticks = ((((days * 24 + hours) * 60 + minutes) * 60) + seconds) * 1e7
+      ticks = ((((days * 24 + hours) * 60 + minutes) * 60) + seconds) * 10000000
     elseif length == 5 then
       local days, hours, minutes, seconds, milliseconds = ...
-      ticks = (((((days * 24 + hours) * 60 + minutes) * 60) + seconds) * 1e3 + milliseconds) * 1e4
+      ticks = (((((days * 24 + hours) * 60 + minutes) * 60) + seconds) * 1000 + milliseconds) * 10000
     else 
       assert(ticks)
     end
@@ -172,41 +191,37 @@ TimeSpan = System.defStc("System.TimeSpan", {
     return this.ticks
   end,
   getDays = function (this) 
-    return div(this.ticks, 864e9)
+    return div(this.ticks, 864000000000)
   end,
-  getHours = function(this) 
-    return div(this.ticks, 36e9) % 24
+  getHours = function(this)
+    return getPart(this, 36000000000, 24)
   end,
-  getMinutes = function (this) 
-    return div(this.ticks, 6e8) % 60
+  getMinutes = function (this)
+    return getPart(this, 600000000, 60)
   end,
-  getSeconds = function (this) 
-    return div(this.ticks, 1e7) % 60
+  getSeconds = function (this)
+    return getPart(this, 10000000, 60)
   end,
-  getMilliseconds = function (this) 
-    return div(this.ticks, 1e4) % 1000
+  getMilliseconds = function (this)
+    return getPart(this, 10000, 1000)
   end,
   getTotalDays = function (this) 
-    return this.ticks / 864e9
+    return this.ticks / 864000000000
   end,
   getTotalHours = function (this) 
-    return this.ticks / 36e9
+    return this.ticks / 36000000000
   end,
   getTotalMilliseconds = function (this) 
-    return this.ticks / 1e4
+    return this.ticks / 10000
   end,
   getTotalMinutes = function (this) 
-    return this.ticks / 6e8
+    return this.ticks / 600000000
   end,
   getTotalSeconds = function (this) 
-    return this.ticks / 1e7
+    return this.ticks / 10000000
   end,
-  Add = function (this, ts) 
-    return TimeSpan(this.ticks + ts.ticks)
-  end,
-  Subtract = function (this, ts) 
-    return TimeSpan(this.ticks - ts.ticks)
-  end,
+  Add = add,
+  Subtract = subtract,
   Duration = function (this) 
     local ticks = this.ticks
     if ticks == -9223372036854775808 then
@@ -214,20 +229,14 @@ TimeSpan = System.defStc("System.TimeSpan", {
     end
     return TimeSpan(ticks >= 0 and ticks or - ticks)
   end,
-  Negate = function (this) 
-    local ticks = this.ticks
-    if ticks == -9223372036854775808 then
-      throw(OverflowException("Overflow_NegateTwosCompNum"))
-    end
-    return TimeSpan(-ticks)
-  end,
+  Negate = negate,
   ToString = function (this) 
-    local day, milliseconds = this:getDays(), this.ticks % 1e7
+    local day, milliseconds = this:getDays(), this.ticks % 10000000
     local daysStr = day == 0 and "" or (day .. ".")
-    local millisecondsStr = milliseconds == 0 and "" or "." .. milliseconds
+    local millisecondsStr = milliseconds == 0 and "" or (".%07d"):format(milliseconds)
     return sformat("%s%02d:%02d:%02d%s", daysStr, this:getHours(), this:getMinutes(), this:getSeconds(), millisecondsStr)
   end,
-  TimeSpan = function (s)
+  Parse = function (s)
     local v, err = parse(s)
     if v then
       return v
@@ -247,6 +256,7 @@ TimeSpan = System.defStc("System.TimeSpan", {
   end,
   __add = add,
   __sub = subtract,
+  __unm = negate,
   __eq = function (t1, t2)
     return t1.ticks == t2.ticks
   end,

@@ -28,7 +28,7 @@ System.namespace("Slipe.Client.Gui", function (namespace)
       __ctor1__(this, SlipeMtaDefinitions.MtaClient.GuiCreateTabPanel(position.X, position.Y, dimensions.X, dimensions.Y, relative, default))
     end
     getSelected = function (this)
-      return System.cast(SlipeClientGui.Tab, SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaClient.GuiGetSelectedTab(this.element)))
+      return SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaClient.GuiGetSelectedTab(this.element), SlipeClientGui.Tab)
     end
     setSelected = function (this, value)
       SlipeMtaDefinitions.MtaClient.GuiSetSelectedTab(this.element, value:getMTAElement())
@@ -44,7 +44,19 @@ System.namespace("Slipe.Client.Gui", function (namespace)
       __ctor__ = {
         __ctor1__,
         __ctor2__
-      }
+      },
+      __metadata__ = function (out)
+        return {
+          properties = {
+            { "Selected", 0x106, out.Slipe.Client.Gui.Tab, getSelected, setSelected }
+          },
+          methods = {
+            { ".ctor", 0x106, __ctor1__, out.Slipe.MtaDefinitions.MtaElement },
+            { ".ctor", 0x406, __ctor2__, System.Numerics.Vector2, System.Numerics.Vector2, System.Boolean, out.Slipe.Client.Gui.GuiElement }
+          },
+          class = { 0x6, System.new(out.Slipe.Shared.Elements.DefaultElementClassAttribute, 2, 24 --[[ElementType.GuiTabPanel]]) }
+        }
+      end
     }
   end)
 end)

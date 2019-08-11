@@ -9,18 +9,18 @@ System.namespace("Slipe.Shared.Helpers", function (namespace)
   -- Adds some required numeric translations
   -- </summary>
   namespace.class("NumericHelper", function (namespace)
-    local ToRadians, ToDegrees, EulerToQuaternion, QuaternionToEuler
+    local ToRadians, ToDegrees, EulerToQuaternion, QuaternionToEuler, RotationBetweenPositions
     -- <summary>
     -- Convert degrees to radians
     -- </summary>
     ToRadians = function (x)
-      return x * 0.0174532923847437 --[[(float)(Math.PI / 180.0)]]
+      return x * 0.017453292 --[[(float)(Math.PI / 180.0)]]
     end
     -- <summary>
     -- Convert radians to degrees
     -- </summary>
     ToDegrees = function (x)
-      return System.ToSingle((x * (57.2957795130823 --[[180.0 / Math.PI]])))
+      return System.ToSingle(x * (57.29577951308232 --[[180.0 / Math.PI]]))
     end
     -- <summary>
     -- Translate an MTA Euler Rotation to a Quaternion
@@ -48,7 +48,7 @@ System.namespace("Slipe.Shared.Helpers", function (namespace)
       local sinp = 2.0 * (v4 * v2 - v3 * v1)
       local pitch
       if math.Abs(sinp) >= 1 then
-        pitch = math.Sign(sinp) > 0 and 3.14159265358979 --[[Math.PI]] or - 3.14159265358979 --[[Math.PI]]
+        pitch = math.Sign(sinp) > 0 and 3.141592653589793 --[[Math.PI]] or - 3.141592653589793 --[[Math.PI]]
       else
         pitch = math.Asin(sinp)
       end
@@ -59,24 +59,47 @@ System.namespace("Slipe.Shared.Helpers", function (namespace)
       local yaw = math.Atan2(siny_cosp, cosy_cosp)
 
       if yaw < 0 then
-        yaw = yaw + (6.28318530717959 --[[2 * Math.PI]])
+        yaw = yaw + (6.283185307179586 --[[2 * Math.PI]])
       end
 
       if pitch < 0 then
-        pitch = pitch + (6.28318530717959 --[[2 * Math.PI]])
+        pitch = pitch + (6.283185307179586 --[[2 * Math.PI]])
       end
 
       if roll < 0 then
-        roll = roll + (6.28318530717959 --[[2 * Math.PI]])
+        roll = roll + (6.283185307179586 --[[2 * Math.PI]])
       end
 
       return SystemNumerics.Vector3(ToDegrees(System.ToSingle(yaw)), ToDegrees(System.ToSingle(pitch)), ToDegrees(System.ToSingle(roll)))
+    end
+    -- <summary>
+    -- Get a vector that describes the rotation between two vectors
+    -- </summary>
+    -- <param name="position2"></param>
+    -- <returns>A rotation vector</returns>
+    RotationBetweenPositions = function (position1, position2)
+      local xAngle = ToDegrees(System.ToSingle(math.Asin((position1.Z - position2.Z) / SystemNumerics.Vector3.Distance(position2, position1))))
+      local zAngle = - ToDegrees(System.ToSingle(math.Atan2(position1.X - position2.X, position1.Y - position2.Y)))
+      return SystemNumerics.Vector3(xAngle < 0 and xAngle + 360 or xAngle, 0, zAngle < 0 and zAngle + 360 or zAngle)
     end
     return {
       ToRadians = ToRadians,
       ToDegrees = ToDegrees,
       EulerToQuaternion = EulerToQuaternion,
-      QuaternionToEuler = QuaternionToEuler
+      QuaternionToEuler = QuaternionToEuler,
+      RotationBetweenPositions = RotationBetweenPositions,
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { "EulerToQuaternion", 0x18E, EulerToQuaternion, System.Numerics.Vector3, System.Numerics.Quaternion },
+            { "QuaternionToEuler", 0x18E, QuaternionToEuler, System.Numerics.Quaternion, System.Numerics.Vector3 },
+            { "RotationBetweenPositions", 0x28E, RotationBetweenPositions, System.Numerics.Vector3, System.Numerics.Vector3, System.Numerics.Vector3 },
+            { "ToDegrees", 0x18E, ToDegrees, System.Single, System.Single },
+            { "ToRadians", 0x18E, ToRadians, System.Single, System.Single }
+          },
+          class = { 0x6 }
+        }
+      end
     }
   end)
 end)

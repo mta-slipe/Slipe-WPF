@@ -9,7 +9,7 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiRadioButton: Gui.RadioButton
+    internal class WpfGuiRadioButton: Gui.RadioButton
     {
         public WpfGuiRadioButton(RadioButton box, Gui.GuiElement parent)
             : base(

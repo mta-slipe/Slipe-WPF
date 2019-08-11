@@ -6,7 +6,7 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiDummy
+    internal class WpfGuiDummy
     {
         public WpfGuiDummy(FrameworkElement element, Gui.GuiElement parent)
         {

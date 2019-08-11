@@ -21,7 +21,15 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
           out.Slipe.Client.Gui.RadioButton
         }
       end,
-      __ctor__ = __ctor__
+      __ctor__ = __ctor__,
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { ".ctor", 0x206, nil, System.Windows.Controls.RadioButton, out.Slipe.Client.Gui.GuiElement }
+          },
+          class = { 0x4 }
+        }
+      end
     }
   end)
 end)

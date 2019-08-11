@@ -9,7 +9,7 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiLabel: Gui.Label
+    internal class WpfGuiLabel: Gui.Label
     {
         public WpfGuiLabel(TextBlock block, Gui.GuiElement parent) 
             : base(

@@ -37,7 +37,7 @@ System.namespace("Slipe.Server.Elements", function (namespace)
     -- </summary>
     Clone = function (source, position)
       local mtaElement = SlipeMtaDefinitions.MtaServer.CloneElement(source:getMTAElement(), position.X, position.Y, position.Z, false)
-      return SlipeSharedElements.ElementManager.getInstance():GetElement(mtaElement)
+      return SlipeSharedElements.ElementManager.getInstance():GetElement1(mtaElement)
     end
     -- <summary>
     -- Gets this element's zone name
@@ -49,7 +49,7 @@ System.namespace("Slipe.Server.Elements", function (namespace)
     -- Gets the syncer of this element
     -- </summary>
     GetSyncer = function (source)
-      return System.cast(SlipeServerPeds.Player, SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaServer.GetElementSyncer(source:getMTAElement())))
+      return SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaServer.GetElementSyncer(source:getMTAElement()), SlipeServerPeds.Player)
     end
     -- <summary>
     -- Sets the syncer of this element
@@ -64,7 +64,21 @@ System.namespace("Slipe.Server.Elements", function (namespace)
       Clone = Clone,
       GetZoneName = GetZoneName,
       GetSyncer = GetSyncer,
-      SetSyncer = SetSyncer
+      SetSyncer = SetSyncer,
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { "ClearVisibleTo", 0x18E, ClearVisibleTo, out.Slipe.Shared.Elements.Element, System.Boolean },
+            { "Clone", 0x28E, Clone, out.Slipe.Shared.Elements.Element, System.Numerics.Vector3, out.Slipe.Shared.Elements.Element },
+            { "GetSyncer", 0x18E, GetSyncer, out.Slipe.Shared.Elements.PhysicalElement, out.Slipe.Server.Peds.Player },
+            { "GetZoneName", 0x28E, GetZoneName, out.Slipe.Shared.Elements.PhysicalElement, System.Boolean, System.String },
+            { "IsVisibleTo", 0x28E, IsVisibleTo, out.Slipe.Shared.Elements.Element, out.Slipe.Shared.Elements.Element, System.Boolean },
+            { "SetSyncer", 0x28E, SetSyncer, out.Slipe.Shared.Elements.PhysicalElement, out.Slipe.Server.Peds.Player, System.Boolean },
+            { "SetVisibleTo", 0x38E, SetVisibleTo, out.Slipe.Shared.Elements.Element, out.Slipe.Shared.Elements.Element, System.Boolean, System.Boolean }
+          },
+          class = { 0xE }
+        }
+      end
     }
   end)
 end)

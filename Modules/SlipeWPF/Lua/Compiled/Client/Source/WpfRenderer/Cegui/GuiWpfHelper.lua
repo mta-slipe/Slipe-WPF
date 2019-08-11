@@ -12,23 +12,24 @@ System.namespace("WpfRenderer.Cegui", function (namespace)
   namespace.class("GuiWpfHelper", function (namespace)
     local AttachHandlers, CreateChildren
     AttachHandlers = function (guiElement, wpfElement)
-      guiElement.OnClick = guiElement.OnClick + function (eventButton, buttonState, mousePosition)
+      guiElement.OnClick = guiElement.OnClick + function (source, args)
         if wpfElement.Click then
             wpfElement:Click(wpfElement, System.Windows.RoutedEventArgs());
         end
       end
-      guiElement.OnDoubleClick = guiElement.OnDoubleClick + function (button, buttonState, mousePosition)
+      guiElement.OnDoubleClick = guiElement.OnDoubleClick + function (source, arg)
+        local button = arg.MouseButton
         local wpfButton = button == 0 --[[MouseButton.Left]] and 0 --[[MouseButton.Left]] or button == 1 --[[MouseButton.Middle]] and 1 --[[MouseButton.Middle]] or button == 2 --[[MouseButton.Right]] and 2 --[[MouseButton.Right]] or 0 --[[MouseButton.Left]]
         if wpfElement.MouseDoubleClick then
             wpfElement:MouseDoubleClick(wpfElement, System.Windows.Input.MouseButtonEventArgs(nil, 0, wpfButton));
         end
       end
-      guiElement.OnMouseEnter = guiElement.OnMouseEnter + function (mousePosition, previousHoverGuiElement)
+      guiElement.OnMouseEnter = guiElement.OnMouseEnter + function (source, args)
         if wpfElement.MouseEnter then
             wpfElement:MouseEnter(wpfElement, System.Windows.Input.MouseEventArgs(nil, 0));
         end
       end
-      guiElement.OnMouseLeave = guiElement.OnMouseLeave + function (mousePosition, nextHoverGuiElement)
+      guiElement.OnMouseLeave = guiElement.OnMouseLeave + function (source, args)
         if wpfElement.MouseLeave then
             wpfElement:MouseLeave(wpfElement, System.Windows.Input.MouseEventArgs(nil, 0));
         end
@@ -73,7 +74,16 @@ System.namespace("WpfRenderer.Cegui", function (namespace)
     end
     return {
       AttachHandlers = AttachHandlers,
-      CreateChildren = CreateChildren
+      CreateChildren = CreateChildren,
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { "AttachHandlers", 0x20E, AttachHandlers, out.Slipe.Client.Gui.GuiElement, System.Windows.FrameworkElement },
+            { "CreateChildren", 0x20E, CreateChildren, out.Slipe.Client.Gui.GuiElement, System.Windows.FrameworkElement }
+          },
+          class = { 0xC }
+        }
+      end
     }
   end)
 end)

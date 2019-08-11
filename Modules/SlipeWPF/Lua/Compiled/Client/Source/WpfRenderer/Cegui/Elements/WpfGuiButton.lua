@@ -10,10 +10,17 @@ System.import(function (out)
 end)
 System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
   namespace.class("WpfGuiButton", function (namespace)
-    local __ctor__
+    local UpdateContent, __ctor__
     __ctor__ = function (this, button, parent)
       SlipeClientGui.Button.__ctor__[2](this, SystemNumerics.Vector2(System.ToSingle(button:getMargin():getLeft()), System.ToSingle(button:getMargin():getTop())), SystemNumerics.Vector2(System.ToSingle(button:getWidth()), System.ToSingle(button:getHeight())), System.cast(System.String, button:getContent()), false, parent)
       WpfRendererCegui.GuiWpfHelper.AttachHandlers(this, button)
+
+      button:addContentChanged(System.fn(this, UpdateContent))
+    end
+    UpdateContent = function (this, content)
+      if this:getContent() ~= content then
+        this:setContent(content)
+      end
     end
     return {
       __inherits__ = function (out)
@@ -21,7 +28,16 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
           out.Slipe.Client.Gui.Button
         }
       end,
-      __ctor__ = __ctor__
+      __ctor__ = __ctor__,
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { ".ctor", 0x206, nil, System.Windows.Controls.Button, out.Slipe.Client.Gui.GuiElement },
+            { "UpdateContent", 0x101, UpdateContent, System.String }
+          },
+          class = { 0x4 }
+        }
+      end
     }
   end)
 end)

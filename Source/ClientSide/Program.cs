@@ -16,8 +16,6 @@ namespace ClientSide
     {
         static void Main(string[] args)
         {
-            new ElementManager(new ElementHelper());
-
             new Program();
         }
 
@@ -26,7 +24,7 @@ namespace ClientSide
 
             ChatBox.WriteLine("Hello world", 0xffff00);
 
-            MainWindow window = new MainWindow();
+            CodeBehindWindow window = new CodeBehindWindow();
             Window guiWindow = CeguiWpfRenderer.Render(window);
             Cursor.SetVisible(guiWindow.Visible);
             // guiWindow.Visible = false;
@@ -42,7 +40,7 @@ namespace ClientSide
                 {
                     return;
                 }
-                window.SetButtonText(arguments[0]);
+                //window.SetButtonText(arguments[0]);
             });
         }
     }

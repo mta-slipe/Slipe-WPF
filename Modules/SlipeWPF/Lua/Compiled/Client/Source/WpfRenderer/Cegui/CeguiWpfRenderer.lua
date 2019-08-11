@@ -13,7 +13,15 @@ System.namespace("WpfRenderer.Cegui", function (namespace)
       return guiWindow
     end
     return {
-      Render = Render
+      Render = Render,
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { "Render", 0x18E, Render, System.Windows.Window, out.Slipe.Client.Gui.Window }
+          },
+          class = { 0x6 }
+        }
+      end
     }
   end)
 end)

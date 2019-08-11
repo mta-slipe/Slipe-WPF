@@ -14,7 +14,15 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
       local row = SlipeMtaDefinitions.MtaClient.GuiGridListAddRow(list:getMTAElement(), System.cast(System.String, item:getContent()), "")
     end
     return {
-      __ctor__ = __ctor__
+      __ctor__ = __ctor__,
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { ".ctor", 0x206, nil, System.Windows.Controls.ListBoxItem, out.Slipe.Client.Gui.GuiElement }
+          },
+          class = { 0x4 }
+        }
+      end
     }
   end)
 end)

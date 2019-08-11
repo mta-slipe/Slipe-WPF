@@ -10,7 +10,7 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiGrid: WpfGuiDummy
+    internal class WpfGuiGrid: WpfGuiDummy
     {
         public WpfGuiGrid(Grid window, Gui.GuiElement parent) : base(window, parent)
         {

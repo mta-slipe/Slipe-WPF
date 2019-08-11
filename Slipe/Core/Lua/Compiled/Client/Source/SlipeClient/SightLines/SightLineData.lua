@@ -25,14 +25,13 @@ System.namespace("Slipe.Client.SightLines", function (namespace)
       if this.DidHit then
         this.CollisionPosition = SystemNumerics.Vector3(d[2], d[3], d[4])
         if d[5] ~= nil then
-          this.HitElement = System.cast(SlipeSharedElements.PhysicalElement, SlipeSharedElements.ElementManager.getInstance():GetElement(d[5]))
+          this.HitElement = SlipeSharedElements.ElementManager.getInstance():GetElement(d[5], SlipeSharedElements.PhysicalElement)
         end
         this.Normal = SystemNumerics.Vector3(d[6], d[7], d:getRest()[1])
         this.SurfaceMaterial = d:getRest()[2]
         this.Lighting = d:getRest()[3]
         this.piece = d:getRest()[4]
         this.WorldModelID = d:getRest()[5]
-
         this.WorldModelMatrix = SystemNumerics.Matrix4x4.op_Addition(SystemNumerics.Matrix4x4.CreateTranslation(d:getRest()[6], d:getRest()[7], d:getRest():getRest()[1]), SystemNumerics.Matrix4x4.CreateFromQuaternion(SlipeSharedHelpers.NumericHelper.EulerToQuaternion(SystemNumerics.Vector3(d:getRest():getRest()[2], d:getRest():getRest()[3], d:getRest():getRest()[4]))))
         this.WorldLODModelID = d:getRest()[5]
       end
@@ -52,7 +51,31 @@ System.namespace("Slipe.Client.SightLines", function (namespace)
       getVehiclePart = getVehiclePart,
       WorldModelID = 0,
       WorldLODModelID = 0,
-      __ctor__ = __ctor__
+      __ctor__ = __ctor__,
+      __metadata__ = function (out)
+        return {
+          fields = {
+            { "piece", 0x1, System.Int32 }
+          },
+          properties = {
+            { "BodyPart", 0x206, System.Int32, getBodyPart },
+            { "CollisionPosition", 0x6, System.Numerics.Vector3 },
+            { "DidHit", 0x6, System.Boolean },
+            { "HitElement", 0x6, out.Slipe.Shared.Elements.PhysicalElement },
+            { "Lighting", 0x6, System.Single },
+            { "Normal", 0x6, System.Numerics.Vector3 },
+            { "SurfaceMaterial", 0x6, System.Int32 },
+            { "VehiclePart", 0x206, System.Int32, getVehiclePart },
+            { "WorldLODModelID", 0x6, System.Int32 },
+            { "WorldModelID", 0x6, System.Int32 },
+            { "WorldModelMatrix", 0x6, System.Numerics.Matrix4x4 }
+          },
+          methods = {
+            { ".ctor", 0x106, nil, System.Tuple }
+          },
+          class = { 0x6 }
+        }
+      end
     }
   end)
 end)

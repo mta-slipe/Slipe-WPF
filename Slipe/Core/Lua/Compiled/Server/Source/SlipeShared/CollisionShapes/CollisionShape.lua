@@ -11,7 +11,7 @@ System.namespace("Slipe.Shared.CollisionShapes", function (namespace)
   -- Base class for collision shapes
   -- </summary>
   namespace.class("CollisionShape", function (namespace)
-    local getShapeType, getElementsWithin, IsInside, IsElementWithin, GetElementsWithinOfType, __ctor__
+    local getShapeType, getElementsWithin, IsInside, IsElementWithin, GetElementsWithin, class, __ctor__
     __ctor__ = function (this, element)
       SlipeSharedElements.PhysicalElement.__ctor__(this, element)
     end
@@ -37,11 +37,11 @@ System.namespace("Slipe.Shared.CollisionShapes", function (namespace)
     -- <summary>
     -- Gets an array of all elements of a specific type inside the collision shape
     -- </summary>
-    GetElementsWithinOfType = function (this, type)
-      local array = SlipeMtaDefinitions.MtaShared.GetArrayFromTable(SlipeMtaDefinitions.MtaShared.GetElementsWithinColShape(this.element, SlipeSharedElements.ElementManager.getInstance():GetTypeName(type)), "MTAElement", T)
-      return SlipeSharedElements.ElementManager.getInstance():CastArray(array, SlipeSharedElements.PhysicalElement)
+    GetElementsWithin = function (this, T)
+      local array = SlipeMtaDefinitions.MtaShared.GetArrayFromTable(SlipeMtaDefinitions.MtaShared.GetElementsWithinColShape(this.element, SlipeSharedElements.ElementManager.getInstance():GetTypeName(System.typeof(T))), "MTAElement", T)
+      return SlipeSharedElements.ElementManager.getInstance():CastArray(array, T)
     end
-    return {
+    class = {
       __inherits__ = function (out)
         return {
           out.Slipe.Shared.Elements.PhysicalElement
@@ -51,8 +51,28 @@ System.namespace("Slipe.Shared.CollisionShapes", function (namespace)
       getElementsWithin = getElementsWithin,
       IsInside = IsInside,
       IsElementWithin = IsElementWithin,
-      GetElementsWithinOfType = GetElementsWithinOfType,
-      __ctor__ = __ctor__
+      GetElementsWithin = GetElementsWithin,
+      __ctor__ = __ctor__,
+      __metadata__ = function (out)
+        return {
+          properties = {
+            { "ElementsWithin", 0x206, System.Array(out.Slipe.Shared.Elements.PhysicalElement), getElementsWithin },
+            { "ShapeType", 0x206, System.String, getShapeType }
+          },
+          methods = {
+            { ".ctor", 0x106, nil, out.Slipe.MtaDefinitions.MtaElement },
+            { "GetElementsWithin", 0x10086, GetElementsWithin, function (T) return System.Array(T) end },
+            { "IsElementWithin", 0x186, IsElementWithin, out.Slipe.Shared.Elements.PhysicalElement, System.Boolean },
+            { "IsInside", 0x186, IsInside, System.Numerics.Vector3, System.Boolean }
+          },
+          events = {
+            { "OnHit", 0x6, System.Delegate(class, out.Slipe.Shared.CollisionShapes.Events.OnHitEventArgs, System.Void) },
+            { "OnLeave", 0x6, System.Delegate(class, out.Slipe.Shared.CollisionShapes.Events.OnLeaveEventArgs, System.Void) }
+          },
+          class = { 0x6, System.new(out.Slipe.Shared.Elements.DefaultElementClassAttribute, 2, 7 --[[ElementType.ColShape]]) }
+        }
+      end
     }
+    return class
   end)
 end)

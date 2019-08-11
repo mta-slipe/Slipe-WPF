@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Slipe.Client.IO;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,34 +14,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfCoreTest.ViewModels;
 
 namespace WpfCoreTest
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow// : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            Debug.WriteLine("Test");
-        }
-
-        public void SetButtonText(string text)
-        {
-            this.button.Content = text;
-        }
-
-        private void ButtonExit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        private void ButtonClick(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine(string.Format("Text value is: {0}", textBox.Text));
-            textBox.Text = "";
         }
     }
 }

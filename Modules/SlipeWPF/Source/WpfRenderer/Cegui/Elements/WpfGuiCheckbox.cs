@@ -9,7 +9,7 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiCheckbox: Gui.CheckBox
+    internal class WpfGuiCheckbox: Gui.CheckBox
     {
         public WpfGuiCheckbox(CheckBox box, Gui.GuiElement parent)
             : base(

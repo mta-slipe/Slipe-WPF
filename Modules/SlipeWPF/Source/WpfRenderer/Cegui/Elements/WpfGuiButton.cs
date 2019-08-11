@@ -9,7 +9,7 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiButton: Gui.Button
+    internal class WpfGuiButton: Gui.Button
     {
         public WpfGuiButton(Button button, Gui.GuiElement parent) 
             : base(
@@ -21,6 +21,18 @@ namespace WpfRenderer.Cegui.Elements
             )
         {
             GuiWpfHelper.AttachHandlers(this, button);
+
+            /*[[
+            button:addContentChanged(System.fn(this, UpdateContent))
+            ]]*/
+        }
+
+        private void UpdateContent(string content)
+        {
+            if (this.Content != content)
+            {
+                this.Content = content;
+            }
         }
     }
 }

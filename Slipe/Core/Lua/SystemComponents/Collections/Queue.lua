@@ -18,11 +18,10 @@ local System = System
 local Array = System.Array
 
 local Queue = {
-  version = 0,
   __ctor__ = Array.ctorList,
   getCount = Array.getLength,
   Clear = Array.clear,
-  Contains = Array.contains,
+  Contains = Array.Contains,
   CopyTo = Array.CopyTo,
   Dequeue = Array.popFirst,
   Enqueue = Array.add,

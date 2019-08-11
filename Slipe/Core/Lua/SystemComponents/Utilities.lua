@@ -33,7 +33,9 @@ local collectgarbage = collectgarbage
 define("System.Environment", {
   Exit = os.exit,
   getStackTrace = debug.traceback,
-  getTickCount = System.currentTimeMillis
+  getTickCount = function ()
+    return System.currentTimeMillis() % 2147483648
+  end
 })
 
 define("System.GC", {
@@ -103,30 +105,14 @@ define("System.Lazy", function (T)
   }
 end, Lazy)
 
-local function getPrecision(seconds)
-  local s = tostring(seconds)
-  local i = s:find("%.")
-  if i then
-    return #s - i
-  end
-  return 0
-end
-
 local ticker, frequency
 local time = System.config.time
 if time then
-  local p1, p2 = getPrecision(time()), getPrecision(clock())
-  if p1 > p2 then
-    ticker = time
-    frequency = 10 ^ p1
-  else
-    ticker = clock
-    frequency = 10 ^ p2
-  end
+  ticker = time
+  frequency = 10000
 else
-  local p = getPrecision(clock())
   ticker = clock
-  frequency = 10 ^ p
+  frequency = 1000
 end
 
 local function getRawElapsedSeconds(this)
@@ -140,7 +126,7 @@ local function getRawElapsedSeconds(this)
 end
 
 local Stopwatch
-Stopwatch = define("System.Stopwatch", {
+Stopwatch = define("System.Diagnostics.Stopwatch", {
   elapsed = 0,
   running = false,
   IsHighResolution = false,
@@ -194,7 +180,7 @@ Stopwatch = define("System.Stopwatch", {
   end,
 
   getElapsed = function (this)
-    return TimeSpan(getRawElapsedSeconds(this) * 1e7)
+    return TimeSpan(trunc(getRawElapsedSeconds(this) * 1e7))
   end,
 
   getElapsedMilliseconds = function (this)
@@ -205,6 +191,7 @@ Stopwatch = define("System.Stopwatch", {
     return trunc(getRawElapsedSeconds(this) * frequency)
   end
 })
+System.Stopwatch = Stopwatch
 
 local weaks = setmetatable({}, { __mode = "kv" })
 
@@ -287,5 +274,4 @@ define("System.Guid", {
     end
   end
 })
-
 

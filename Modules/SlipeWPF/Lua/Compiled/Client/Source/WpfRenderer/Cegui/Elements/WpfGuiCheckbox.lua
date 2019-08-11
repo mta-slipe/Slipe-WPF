@@ -12,7 +12,7 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
   namespace.class("WpfGuiCheckbox", function (namespace)
     local __ctor__
     __ctor__ = function (this, box, parent)
-      SlipeClientGui.CheckBox.__ctor__[2](this, SystemNumerics.Vector2(System.ToSingle(box:getMargin():getLeft()), System.ToSingle(box:getMargin():getTop())), SystemNumerics.Vector2(System.ToSingle(box:getWidth()), System.ToSingle(box:getHeight())), System.cast(System.String, box:getContent()), System.GetValueOrDefault(box:getIsChecked(), false), false, parent)
+      SlipeClientGui.CheckBox.__ctor__[2](this, SystemNumerics.Vector2(System.ToSingle(box:getMargin():getLeft()), System.ToSingle(box:getMargin():getTop())), SystemNumerics.Vector2(System.ToSingle(box:getWidth()), System.ToSingle(box:getHeight())), System.cast(System.String, box:getContent()), (box:getIsChecked() or false), false, parent)
       WpfRendererCegui.GuiWpfHelper.AttachHandlers(this, box)
     end
     return {
@@ -21,7 +21,15 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
           out.Slipe.Client.Gui.CheckBox
         }
       end,
-      __ctor__ = __ctor__
+      __ctor__ = __ctor__,
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { ".ctor", 0x206, nil, System.Windows.Controls.CheckBox, out.Slipe.Client.Gui.GuiElement }
+          },
+          class = { 0x4 }
+        }
+      end
     }
   end)
 end)

@@ -42,15 +42,15 @@ System.namespace("Slipe.Server.IO", function (namespace)
           default(command, parameters)
         end
       else
-        local extern = this.callback
-        if extern ~= nil then
-          local ref
+        local default = this.callback
+        if default ~= nil then
+          local extern
           if element == nil then
-            ref = nil
+            extern = nil
           else
-            ref = System.cast(SlipeServerPeds.Player, SlipeSharedElements.ElementManager.getInstance():GetElement(element))
+            extern = SlipeSharedElements.ElementManager.getInstance():GetElement(element, SlipeServerPeds.Player)
           end
-          extern(ref, command, parameters)
+          default(extern, command, parameters)
         end
       end
     end
@@ -59,7 +59,7 @@ System.namespace("Slipe.Server.IO", function (namespace)
     -- </summary>
     -- <param name="args"></param>
     Execute = function (this, player, args)
-      SlipeMtaDefinitions.MtaServer.ExecuteCommandHandler(this.command, player:getMTAElement(), System.String.Join(" ", args))
+      SlipeMtaDefinitions.MtaServer.ExecuteCommandHandler(this.command, player:getMTAElement(), System.String.JoinParams(" ", args))
     end
     -- <summary>
     -- Executes the command handler in name of the player
@@ -67,7 +67,7 @@ System.namespace("Slipe.Server.IO", function (namespace)
     -- <param name="command"></param>
     -- <param name="args"></param>
     Execute1 = function (player, command, args)
-      SlipeMtaDefinitions.MtaServer.ExecuteCommandHandler(command, player:getMTAElement(), System.String.Join(" ", args))
+      SlipeMtaDefinitions.MtaServer.ExecuteCommandHandler(command, player:getMTAElement(), System.String.JoinParams(" ", args))
     end
     return {
       Execute = Execute,
@@ -75,7 +75,24 @@ System.namespace("Slipe.Server.IO", function (namespace)
       __ctor__ = {
         __ctor1__,
         __ctor2__
-      }
+      },
+      __metadata__ = function (out)
+        return {
+          fields = {
+            { "callback", 0x1, System.Delegate(out.Slipe.Server.Peds.Player, System.String, System.Array(System.String), System.Void) },
+            { "command", 0x1, System.String },
+            { "consoleCallback", 0x1, System.Delegate(System.String, System.Array(System.String), System.Void) }
+          },
+          methods = {
+            { ".ctor", 0x406, __ctor1__, System.String, System.Delegate(out.Slipe.Server.Peds.Player, System.String, System.Array(System.String), System.Void), System.Boolean, System.Boolean },
+            { ".ctor", 0x406, __ctor2__, System.String, System.Delegate(System.String, System.Array(System.String), System.Void), System.Boolean, System.Boolean },
+            { "CommandHandlerCallback", 0x301, CommandHandlerCallback, out.Slipe.MtaDefinitions.MtaElement, System.String, System.Array(System.String) },
+            { "Execute", 0x206, Execute, out.Slipe.Server.Peds.Player, System.Array(System.String) },
+            { "Execute", 0x30E, Execute1, out.Slipe.Server.Peds.Player, System.String, System.Array(System.String) }
+          },
+          class = { 0x6 }
+        }
+      end
     }
   end)
 end)

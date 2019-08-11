@@ -15,7 +15,7 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
       SlipeClientGui.Edit.__ctor__[2](this, SystemNumerics.Vector2(System.ToSingle(block:getMargin():getLeft()), System.ToSingle(block:getMargin():getTop())), SystemNumerics.Vector2(System.ToSingle(block:getWidth()), System.ToSingle(block:getHeight())), block:getText(), false, parent, false, 128)
       WpfRendererCegui.GuiWpfHelper.AttachHandlers(this, block)
 
-      this.OnChanged = this.OnChanged + function ()
+      this.OnChanged = this.OnChanged + function (source, args)
         block:setText(this:getContent())
       end
 
@@ -26,7 +26,7 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
       this:setMasked(true)
       WpfRendererCegui.GuiWpfHelper.AttachHandlers(this, block)
 
-      this.OnChanged = this.OnChanged + function ()
+      this.OnChanged = this.OnChanged + function (source, args)
         block:setPassword(this:getContent())
       end
 
@@ -46,7 +46,17 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
       __ctor__ = {
         __ctor1__,
         __ctor2__
-      }
+      },
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { ".ctor", 0x206, __ctor1__, System.Windows.Controls.TextBox, out.Slipe.Client.Gui.GuiElement },
+            { ".ctor", 0x206, __ctor2__, System.Windows.Controls.PasswordBox, out.Slipe.Client.Gui.GuiElement },
+            { "UpdateContent", 0x101, UpdateContent, System.String }
+          },
+          class = { 0x4 }
+        }
+      end
     }
   end)
 end)

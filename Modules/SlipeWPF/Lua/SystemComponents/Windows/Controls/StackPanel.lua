@@ -8,6 +8,12 @@ end
 
 StackPanel.LoadXaml = function(this, xmlNode)
 	System.Windows.Controls.Panel.LoadXaml(this, xmlNode)
+	
+	if xmlNode.attributes["Orientation"] then
+		this:setOrientation(xmlNode.attributes["Orientation"] == "Horizontal" and 0 --[[ Orientation.Horizontal ]] or 1 --[[ Orientation.Vertical ]])
+	else
+		this:setOrientation(1 --[[ Orientation.Vertical ]])
+	end
 end
 
 createProperties(StackPanel,{ 

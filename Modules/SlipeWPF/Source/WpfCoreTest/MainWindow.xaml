@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCoreTest"
+        xmlns:viewmodels="clr-namespace:WpfCoreTest.ViewModels"
         mc:Ignorable="d"
-        Title="Slipe WPF Sample Window" Height="450" Width="800">
+        Title="Slipe WPF Sample Window With Binding" Height="450" Width="800">
+    <!--<Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>-->
     <Grid>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,25,0,0" TextWrapping="Wrap" Text="Text:" VerticalAlignment="Top" Width="49" Height="18"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="18" Margin="64,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="button" Content="(C)lick me" HorizontalAlignment="Left" Margin="189,25,0,0" VerticalAlignment="Top" Width="76" Click="ButtonClick"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="18" Margin="64,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Echo}"/>
+        <Button x:Name="button" Content="(C)lick me" HorizontalAlignment="Left" Margin="189,25,0,0" VerticalAlignment="Top" Width="76" Command="{Binding EchoCommand}"/>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="159" Margin="10,50,0,0" VerticalAlignment="Top" Width="431">
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5">
@@ -33,7 +37,7 @@
             </TabItem>
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5">
-                    <StackPanel HorizontalAlignment="Left" Height="111" VerticalAlignment="Top" Width="100" Margin="10,10,0,0">
+                    <StackPanel HorizontalAlignment="Left" Height="111" VerticalAlignment="Top" Width="100" Margin="10,10,0,0" Orientation="Vertical">
                         <Button x:Name="button1" Content="Button"/>
                         <Button x:Name="button2" Content="Button"/>
                         <Button x:Name="button3" Content="Button"/>

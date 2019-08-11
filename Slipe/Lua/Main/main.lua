@@ -1,11 +1,14 @@
 require = function() end
 
+local isServer = triggerServerEvent == nil
+local isClient = not isServer
+
 local allClasses = {}	
 local mainString	
 
- local oldInit = System.init	
+local oldInit = System.init	
 
- local prepareInit = function(classes)	
+local prepareInit = function(classes)	
 	for _, class in ipairs(classes) do	
 		allClasses[#allClasses + 1] = class	
 	end	
@@ -23,7 +26,7 @@ function prepareManifest(filepath)
 	if not fileExists(filepath) then
 		return
 	end
-	System.init = prepareInit	
+	System.init = prepareInit
 	local file = fileOpen(filepath)
 	local content = fileRead(file, fileGetSize(file))
 	fileClose(file)
@@ -44,21 +47,23 @@ function finalizeManifest(filepath)
 end
 
 function prepareModule(path)
-	local path = path .. "/Lua/Compiled/" .. ( triggerServerEvent == nil and "Server" or "Client") .. "/manifest.lua"
+	local path = path .. "/Lua/Compiled/" .. ( isServer and "Server" or "Client") .. "/manifest.lua"
 	prepareManifest(path)
 end
-prepareModule("Slipe/Core")
-prepareModule("Modules/SlipeWPF")
+for _, modulePath in ipairs(moduleTable) do
+	prepareModule(modulePath)
+end
 
-local mainManifest = triggerServerEvent == nil and "Dist/Server/manifest.lua" or "Dist/Client/manifest.lua"
+local mainManifest = isServer and "Dist/Server/manifest.lua" or "Dist/Client/manifest.lua"
 finalizeManifest(mainManifest)
 
 function runEntryPoint()
-	local stringEntryPoint = System.entryPoint
-
-	if stringEntryPoint == nil then
-		return
+	if (isClient) then
+		-- instantiate the local player to ensure ElementManager.GetElement will always return a LocalPlayer instance
+		local localPlayer = Slipe.Client.Peds.LocalPlayer.getInstance()
 	end
+
+	local stringEntryPoint = System.entryPoint
 
 	local splits = split(stringEntryPoint, ".") 
 	local result = _G 
@@ -66,6 +71,6 @@ function runEntryPoint()
 		result = result[split] 
 	end
 	result()
-	initEvents()
 end
+initEvents()
 runEntryPoint()

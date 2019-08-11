@@ -19,7 +19,7 @@ System.namespace("Slipe.Client.Sounds", function (namespace)
     getPanningEnabled, setPanningEnabled, AttachTo, AttachTo1, Detach, getToAttached, getIsAttached, __ctor1__, 
     __ctor2__, __ctor3__, __ctor4__, __ctor5__
     __ctor1__ = function (this, element)
-      SlipeClientSounds.Sound.__ctor__[2](this, element)
+      SlipeClientSounds.Sound.__ctor__[1](this, element)
     end
     -- <summary>
     -- Create a sound in the world at a certain position
@@ -95,7 +95,7 @@ System.namespace("Slipe.Client.Sounds", function (namespace)
       SlipeMtaDefinitions.MtaShared.DetachElements(this.element)
     end
     getToAttached = function (this)
-      return System.cast(SlipeSharedElements.PhysicalElement, SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaShared.GetElementAttachedTo(this.element)))
+      return SlipeSharedElements.ElementManager.getInstance():GetElement(SlipeMtaDefinitions.MtaShared.GetElementAttachedTo(this.element), SlipeSharedElements.PhysicalElement)
     end
     getIsAttached = function (this)
       return SlipeMtaDefinitions.MtaShared.IsElementAttached(this.element)
@@ -127,7 +127,31 @@ System.namespace("Slipe.Client.Sounds", function (namespace)
         __ctor3__,
         __ctor4__,
         __ctor5__
-      }
+      },
+      __metadata__ = function (out)
+        return {
+          properties = {
+            { "Dimension", 0x106, System.Int32, getDimension, setDimension },
+            { "IsAttached", 0x206, System.Boolean, getIsAttached },
+            { "MaxDistance", 0x106, System.Int32, getMaxDistance, setMaxDistance },
+            { "MinDistance", 0x106, System.Int32, getMinDistance, setMinDistance },
+            { "PanningEnabled", 0x106, System.Boolean, getPanningEnabled, setPanningEnabled },
+            { "Position", 0x106, System.Numerics.Vector3, getPosition, setPosition },
+            { "ToAttached", 0x206, out.Slipe.Shared.Elements.PhysicalElement, getToAttached }
+          },
+          methods = {
+            { ".ctor", 0x106, __ctor1__, out.Slipe.MtaDefinitions.MtaElement },
+            { ".ctor", 0x406, __ctor2__, System.String, System.Numerics.Vector3, System.Boolean, System.Boolean },
+            { ".ctor", 0x506, __ctor3__, System.Int32, System.Int32, System.Int32, System.Numerics.Vector3, System.Boolean },
+            { ".ctor", 0x406, __ctor4__, System.Int32, System.Int32, System.Numerics.Vector3, System.Boolean },
+            { ".ctor", 0x406, __ctor5__, System.Int32, System.Int32, System.Numerics.Vector3, System.Boolean },
+            { "AttachTo", 0x206, AttachTo, out.Slipe.Shared.Elements.PhysicalElement, System.Numerics.Vector3 },
+            { "AttachTo", 0x106, AttachTo1, out.Slipe.Shared.Elements.PhysicalElement },
+            { "Detach", 0x6, Detach }
+          },
+          class = { 0x6 }
+        }
+      end
     }
   end)
 end)

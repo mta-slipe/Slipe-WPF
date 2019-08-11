@@ -16,7 +16,15 @@ System.namespace("Slipe.Server.Elements", function (namespace)
           out.Slipe.Shared.Elements.Element
         }
       end,
-      __ctor__ = __ctor__
+      __ctor__ = __ctor__,
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { ".ctor", 0x106, nil, out.Slipe.MtaDefinitions.MtaElement }
+          },
+          class = { 0x6, System.new(out.Slipe.Shared.Elements.DefaultElementClassAttribute, 2, 35 --[[ElementType.Resource]]) }
+        }
+      end
     }
   end)
 end)

@@ -73,7 +73,7 @@ System.namespace("Slipe.Server.Acl", function (namespace)
     -- Add a new object to this group
     -- </summary>
     AddObject = function (this, obj)
-      return SlipeMtaDefinitions.MtaServer.AclGroupAddObject(this.group, obj:getACLIdentifier())
+      return SlipeMtaDefinitions.MtaServer.AclGroupAddObject(this.group, obj:getAclIdentifier())
     end
     -- <summary>
     -- Remove an ACL entry from this group
@@ -85,7 +85,7 @@ System.namespace("Slipe.Server.Acl", function (namespace)
     -- Remove an ACL object form this group
     -- </summary>
     RemoveObject = function (this, obj)
-      return SlipeMtaDefinitions.MtaServer.AclGroupRemoveObject(this.group, obj:getACLIdentifier())
+      return SlipeMtaDefinitions.MtaServer.AclGroupRemoveObject(this.group, obj:getAclIdentifier())
     end
     -- <summary>
     -- Delete this ACL group
@@ -108,7 +108,32 @@ System.namespace("Slipe.Server.Acl", function (namespace)
       __ctor__ = {
         __ctor1__,
         __ctor2__
-      }
+      },
+      __metadata__ = function (out)
+        return {
+          fields = {
+            { "group", 0x5, out.Slipe.MtaDefinitions.MtaAclGroup }
+          },
+          properties = {
+            { "ACL", 0x206, out.Slipe.MtaDefinitions.MtaAclGroup, getACL },
+            { "All", 0x20E, System.Array(out.Slipe.Server.Acl.AclGroup), getAll },
+            { "Entries", 0x206, System.Array(out.Slipe.Server.Acl.AclEntry), getEntries },
+            { "Name", 0x206, System.String, getName },
+            { "Objects", 0x206, System.Array(out.Slipe.Server.Acl.IAclObject), getObjects }
+          },
+          methods = {
+            { ".ctor", 0x106, __ctor1__, out.Slipe.MtaDefinitions.MtaAclGroup },
+            { ".ctor", 0x106, __ctor2__, System.String },
+            { "AddEntry", 0x186, AddEntry, out.Slipe.Server.Acl.AclEntry, System.Boolean },
+            { "AddObject", 0x186, AddObject, out.Slipe.Server.Acl.IAclObject, System.Boolean },
+            { "Destroy", 0x86, Destroy, System.Boolean },
+            { "Get", 0x18E, Get, System.String, class },
+            { "RemoveEntry", 0x186, RemoveEntry, out.Slipe.Server.Acl.AclEntry, System.Boolean },
+            { "RemoveObject", 0x186, RemoveObject, out.Slipe.Server.Acl.IAclObject, System.Boolean }
+          },
+          class = { 0x6 }
+        }
+      end
     }
     return class
   end)

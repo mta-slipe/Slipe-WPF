@@ -21,7 +21,12 @@ function createEvents(class, events)
 	for _, event in pairs(events) do
 		class["add" .. event] = function(this, value)
 			this[event] = this[event] + value
+			this[event] = this[event] + function(...)
+				this["On" .. event](...)
+			end
+		end
+		class["On" .. event] = function(this, value)
+			
 		end
 	end
-
 end

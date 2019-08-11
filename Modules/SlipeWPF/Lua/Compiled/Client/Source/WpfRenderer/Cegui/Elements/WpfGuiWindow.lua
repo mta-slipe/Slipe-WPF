@@ -14,7 +14,7 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
   namespace.class("WpfGuiWindow", function (namespace)
     local __ctor__
     __ctor__ = function (this, window)
-      SlipeClientGui.Window.__ctor__[2](this, SystemNumerics.Vector2(SlipeClientRendering.Renderer.getInstance():getScreenSize().X / 2 - System.ToSingle(window:getWidth()) / 2, SlipeClientRendering.Renderer.getInstance():getScreenSize().Y / 2 - System.ToSingle(window:getHeight()) / 2), SystemNumerics.Vector2(System.ToSingle(window:getWidth()), System.ToSingle(window:getHeight())), window:getTitle(), false)
+      SlipeClientGui.Window.__ctor__[2](this, SystemNumerics.Vector2(SlipeClientRendering.Renderer.getScreenSize().X / 2 - System.ToSingle(window:getWidth()) / 2, SlipeClientRendering.Renderer.getScreenSize().Y / 2 - System.ToSingle(window:getHeight()) / 2), SystemNumerics.Vector2(System.ToSingle(window:getWidth()), System.ToSingle(window:getHeight())), window:getTitle(), false)
       WpfRendererCegui.GuiWpfHelper.AttachHandlers(this, window)
 
       WpfRendererCegui.GuiWpfHelper.CreateChildren(this, window)
@@ -25,7 +25,15 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
           out.Slipe.Client.Gui.Window
         }
       end,
-      __ctor__ = __ctor__
+      __ctor__ = __ctor__,
+      __metadata__ = function (out)
+        return {
+          methods = {
+            { ".ctor", 0x106, nil, System.Windows.Window }
+          },
+          class = { 0x4 }
+        }
+      end
     }
   end)
 end)

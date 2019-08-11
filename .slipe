@@ -3,7 +3,9 @@
     "client": [
       "ClientSide"
     ],
-    "server": []
+    "server": [
+      "ServerSide"
+    ]
   },
   "dlls": [],
   "systemComponents": [],
@@ -26,6 +28,9 @@
       "dlls": [
         "SlipeMTADefinitions.dll",
         "Slipe.Sql.dll"
+      ],
+      "attributes": [
+        "Slipe.Shared.Elements.DefaultElementClassAttribute"
       ],
       "systemComponents": [
         "Core.lua",
@@ -139,6 +144,7 @@
         "System.ComponentModel.TypeConverter",
         "WindowsFormsIntegration"
       ],
+      "attributes": [],
       "systemComponents": [
         "WpfHelper.lua",
         "Uri.lua",
@@ -147,6 +153,7 @@
         "Windows/Thickness.lua",
         "Windows/UIElement.lua",
         "Windows/FrameworkElement.lua",
+        "Windows/Controls/Orientation.lua",
         "Windows/Controls/Control.lua",
         "Windows/Controls/ContentControl.lua",
         "Windows/Controls/Primitives/ButtonBase.lua",
@@ -188,6 +195,7 @@
       ]
     }
   ],
+  "exports": [],
   "clientMinVersion": null,
   "serverMinVersion": null
 }

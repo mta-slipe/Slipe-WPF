@@ -5,20 +5,21 @@ System.namespace("Slipe.Shared.GameWorld", function (namespace)
   -- Represents the weather in the world
   -- </summary>
   namespace.struct("Weather", function (namespace)
-    local getCurrent, setCurrent, getTransitionTo, setTransitionTo, __ctor1__, __ctor2__, __ctor3__
-    __ctor1__ = function (this)
-    end
+    local getCurrent, setCurrent, getTransitionTo, setTransitionTo, __ctor1__, __ctor2__
     -- <summary>
     -- Creates a weather struct that represents a transitioning weather
     -- </summary>
-    __ctor2__ = function (this, current, transitionTo)
+    __ctor1__ = function (this, current, transitionTo)
+      if current == nil then
+        return
+      end
       this._from = current
       this._to = transitionTo
     end
     -- <summary>
     -- Creates a weather struct representing a single weather state
     -- </summary>
-    __ctor3__ = function (this, weather)
+    __ctor2__ = function (this, weather)
       this._from = weather
       this._to = - 1
     end
@@ -43,9 +44,24 @@ System.namespace("Slipe.Shared.GameWorld", function (namespace)
       setTransitionTo = setTransitionTo,
       __ctor__ = {
         __ctor1__,
-        __ctor2__,
-        __ctor3__
-      }
+        __ctor2__
+      },
+      __metadata__ = function (out)
+        return {
+          fields = {
+            { "_from", 0x1, System.Int32 },
+            { "_to", 0x1, System.Int32 }
+          },
+          properties = {
+            { "Current", 0x106, System.Int32, getCurrent, setCurrent },
+            { "TransitionTo", 0x106, System.Int32, getTransitionTo, setTransitionTo }
+          },
+          methods = {
+            { ".ctor", 0x206, __ctor1__, System.Int32, System.Int32 },
+            { ".ctor", 0x106, __ctor2__, System.Int32 }
+          }
+        }
+      end
     }
   end)
 end)

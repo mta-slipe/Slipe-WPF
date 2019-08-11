@@ -130,7 +130,35 @@ System.namespace("Slipe.Server.Accounts", function (namespace)
       __ctor__ = {
         __ctor1__,
         __ctor2__
-      }
+      },
+      __metadata__ = function (out)
+        return {
+          fields = {
+            { "ban", 0x1, out.Slipe.MtaDefinitions.MtaBan }
+          },
+          properties = {
+            { "Admin", 0x106, System.String, getAdmin, setAdmin },
+            { "All", 0x20E, System.Array(out.Slipe.Server.Accounts.Ban), getAll },
+            { "Ip", 0x206, System.String, getIp },
+            { "Nickname", 0x106, System.String, getNickname, setNickname },
+            { "Reason", 0x106, System.String, getReason, setReason },
+            { "Serial", 0x206, System.String, getSerial },
+            { "TimeStamp", 0x206, System.Int32, getTimeStamp },
+            { "UnbanTimeStamp", 0x106, System.Int32, getUnbanTimeStamp, setUnbanTimeStamp }
+          },
+          methods = {
+            { ".ctor", 0x506, __ctor1__, System.String, System.String, out.Slipe.Server.Peds.Player, System.String, System.Int32 },
+            { ".ctor", 0x106, __ctor2__, out.Slipe.MtaDefinitions.MtaBan },
+            { "Remove", 0x106, Remove, out.Slipe.Server.Peds.Player },
+            { "Remove", 0x6, Remove1 }
+          },
+          events = {
+            { "OnRemoved", 0xE, System.Delegate(out.Slipe.Server.Elements.RootElement, out.Slipe.Server.Accounts.Events.OnRemovedEventArgs, System.Void) },
+            { "OnAdded", 0xE, System.Delegate(out.Slipe.Server.Elements.RootElement, out.Slipe.Server.Accounts.Events.OnAddedEventArgs, System.Void) }
+          },
+          class = { 0x6 }
+        }
+      end
     }
     return class
   end)

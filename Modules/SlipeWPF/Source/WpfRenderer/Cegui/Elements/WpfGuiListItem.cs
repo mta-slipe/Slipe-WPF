@@ -11,7 +11,7 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiListItem
+    internal class WpfGuiListItem
     {
         public WpfGuiListItem(ListBoxItem item, Gui.GuiElement parent) 
         {

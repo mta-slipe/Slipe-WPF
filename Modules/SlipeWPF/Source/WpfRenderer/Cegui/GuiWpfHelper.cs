@@ -12,11 +12,11 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui
 {
-    public static class GuiWpfHelper
+    internal static class GuiWpfHelper
     {
         public static void AttachHandlers(Gui.GuiElement guiElement, FrameworkElement wpfElement)
         {
-            guiElement.OnClick += (MouseButton eventButton, MouseButtonState buttonState, Vector2 mousePosition) =>
+            guiElement.OnClick += (source, args) =>
             {
                 /*[[
                 if wpfElement.Click then
@@ -24,8 +24,9 @@ namespace WpfRenderer.Cegui
                 end
                 ]]*/
             };
-            guiElement.OnDoubleClick += (MouseButton button, MouseButtonState buttonState, Vector2 mousePosition) =>
+            guiElement.OnDoubleClick += (source, arg) =>
             {
+                MouseButton button = arg.MouseButton;
                 System.Windows.Input.MouseButton wpfButton =
                     button == MouseButton.Left ? System.Windows.Input.MouseButton.Left :
                     button == MouseButton.Middle ? System.Windows.Input.MouseButton.Middle :
@@ -37,7 +38,7 @@ namespace WpfRenderer.Cegui
                 end
                 ]]*/
             };
-            guiElement.OnMouseEnter += (Vector2 mousePosition, Gui.GuiElement previousHoverGuiElement) =>
+            guiElement.OnMouseEnter += (source, args) =>
             {
                 /*[[
                 if wpfElement.MouseEnter then
@@ -45,7 +46,7 @@ namespace WpfRenderer.Cegui
                 end
                 ]]*/
             };
-            guiElement.OnMouseLeave += (Vector2 mousePosition, Gui.GuiElement nextHoverGuiElement) =>
+            guiElement.OnMouseLeave += (source, args) =>
             {
                 /*[[
                 if wpfElement.MouseLeave then

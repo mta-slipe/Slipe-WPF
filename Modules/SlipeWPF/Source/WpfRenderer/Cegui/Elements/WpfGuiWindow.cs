@@ -9,11 +9,11 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiWindow: Gui.Window
+    internal class WpfGuiWindow: Gui.Window
     {
         public WpfGuiWindow(Window window) 
             : base(
-                new Vector2(Renderer.Instance.ScreenSize.X / 2 - (float)window.Width / 2, Renderer.Instance.ScreenSize.Y / 2 - (float)window.Height / 2), 
+                new Vector2(Renderer.ScreenSize.X / 2 - (float)window.Width / 2, Renderer.ScreenSize.Y / 2 - (float)window.Height / 2), 
                 new Vector2((float)window.Width, (float)window.Height), 
                 window.Title
             )

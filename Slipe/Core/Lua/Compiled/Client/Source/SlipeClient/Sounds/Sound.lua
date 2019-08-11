@@ -17,39 +17,36 @@ System.namespace("Slipe.Client.Sounds", function (namespace)
   namespace.class("Sound", function (namespace)
     local getBpm, getBufferLength, getEffects, getLength, getLevelData, getMetaTags, getPan, setPan, 
     getTrackPosition, setTrackPosition, getProperties, getSpeed, setSpeed, getVolume, setVolume, getPaused, 
-    setPaused, GetFftData, Destroy, GetSfxStatus, __ctor1__, __ctor2__, __ctor3__, __ctor4__, 
-    __ctor5__, __ctor6__, __ctor7__
-    __ctor1__ = function (this)
-      SlipeSharedElements.Element.__ctor__[1](this)
-    end
-    __ctor2__ = function (this, element)
+    setPaused, GetFftData, Destroy, GetSfxStatus, class, __ctor1__, __ctor2__, __ctor3__, 
+    __ctor4__, __ctor5__, __ctor6__
+    __ctor1__ = function (this, element)
       SlipeSharedElements.Element.__ctor__[2](this, element)
     end
     -- <summary>
     -- Create sound
     -- </summary>
-    __ctor3__ = function (this, pathOrUrl, looped, throttled)
-      __ctor2__(this, SlipeMtaDefinitions.MtaClient.PlaySound(pathOrUrl, looped, throttled))
+    __ctor2__ = function (this, pathOrUrl, looped, throttled)
+      __ctor1__(this, SlipeMtaDefinitions.MtaClient.PlaySound(pathOrUrl, looped, throttled))
     end
     -- <summary>
     -- Create a GTA Sfx
     -- </summary>
-    __ctor4__ = function (this, container, bankId, soundId, looped)
-      __ctor2__(this, SlipeMtaDefinitions.MtaClient.PlaySFX(container:ToEnumString(SlipeClientSounds.SoundContainer):ToLower(), bankId, soundId, looped))
+    __ctor3__ = function (this, container, bankId, soundId, looped)
+      __ctor1__(this, SlipeMtaDefinitions.MtaClient.PlaySFX(container:ToEnumString(SlipeClientSounds.SoundContainer):ToLower(), bankId, soundId, looped))
     end
     -- <summary>
     -- Create a GTA radio station sound
     -- </summary>
-    __ctor5__ = function (this, station, trackId, looped)
-      __ctor2__(this, SlipeMtaDefinitions.MtaClient.PlaySFX("radio", SlipeMtaDefinitions.MtaClient.GetRadioChannelName(station), trackId, looped))
+    __ctor4__ = function (this, station, trackId, looped)
+      __ctor1__(this, SlipeMtaDefinitions.MtaClient.PlaySFX("radio", SlipeMtaDefinitions.MtaClient.GetRadioChannelName(station), trackId, looped))
     end
     -- <summary>
     -- Create an extra GTA radio station sound
     -- </summary>
-    __ctor6__ = function (this, station, trackId, looped)
-      __ctor2__(this, SlipeMtaDefinitions.MtaClient.PlaySFX("radio", station:ToEnumString(SlipeClientSounds.ExtraStations), trackId, looped))
+    __ctor5__ = function (this, station, trackId, looped)
+      __ctor1__(this, SlipeMtaDefinitions.MtaClient.PlaySFX("radio", station:ToEnumString(SlipeClientSounds.ExtraStations), trackId, looped))
     end
-    __ctor7__ = function (this, player)
+    __ctor6__ = function (this, player)
       SlipeSharedElements.Element.__ctor__[1](this)
       this.element = player:getMTAElement()
     end
@@ -136,7 +133,7 @@ System.namespace("Slipe.Client.Sounds", function (namespace)
     GetSfxStatus = function (container)
       return SlipeMtaDefinitions.MtaClient.GetSFXStatus(container:ToEnumString(SlipeClientSounds.SoundContainer):ToLower())
     end
-    return {
+    class = {
       __inherits__ = function (out)
         return {
           out.Slipe.Shared.Elements.Element
@@ -168,9 +165,52 @@ System.namespace("Slipe.Client.Sounds", function (namespace)
         __ctor3__,
         __ctor4__,
         __ctor5__,
-        __ctor6__,
-        __ctor7__
-      }
+        __ctor6__
+      },
+      __metadata__ = function (out)
+        return {
+          properties = {
+            { "Bpm", 0x206, System.Int32, getBpm },
+            { "BufferLength", 0x206, System.Single, getBufferLength },
+            { "Effects", 0x206, out.Slipe.Client.Sounds.SoundEffects, getEffects },
+            { "Length", 0x206, System.Single, getLength },
+            { "LevelData", 0x206, System.Tuple, getLevelData },
+            { "MetaTags", 0x206, out.Slipe.Client.Sounds.SoundMeta, getMetaTags },
+            { "Pan", 0x106, System.Single, getPan, setPan },
+            { "Paused", 0x106, System.Boolean, getPaused, setPaused },
+            { "Properties", 0x206, out.Slipe.Client.Sounds.SoundProperties, getProperties },
+            { "Speed", 0x106, System.Single, getSpeed, setSpeed },
+            { "TrackPosition", 0x106, System.Single, getTrackPosition, setTrackPosition },
+            { "Volume", 0x106, System.Single, getVolume, setVolume }
+          },
+          fields = {
+            { "effects", 0x1, out.Slipe.Client.Sounds.SoundEffects },
+            { "meta", 0x1, out.Slipe.Client.Sounds.SoundMeta },
+            { "properties", 0x1, out.Slipe.Client.Sounds.SoundProperties }
+          },
+          methods = {
+            { ".ctor", 0x106, __ctor1__, out.Slipe.MtaDefinitions.MtaElement },
+            { ".ctor", 0x306, __ctor2__, System.String, System.Boolean, System.Boolean },
+            { ".ctor", 0x406, __ctor3__, System.Int32, System.Int32, System.Int32, System.Boolean },
+            { ".ctor", 0x306, __ctor4__, System.Int32, System.Int32, System.Boolean },
+            { ".ctor", 0x306, __ctor5__, System.Int32, System.Int32, System.Boolean },
+            { ".ctor", 0x106, __ctor6__, out.Slipe.Client.Peds.Player },
+            { "Destroy", 0x86, Destroy, System.Boolean },
+            { "GetFftData", 0x286, GetFftData, System.Int32, System.Int32, System.Array(System.Single) },
+            { "GetSfxStatus", 0x18E, GetSfxStatus, System.Int32, System.Boolean }
+          },
+          events = {
+            { "OnBeat", 0x6, System.Delegate(class, out.Slipe.Client.Sounds.Events.OnBeatEventArgs, System.Void) },
+            { "OnMetaChanged", 0x6, System.Delegate(class, out.Slipe.Client.Sounds.Events.OnMetaChangedEventArgs, System.Void) },
+            { "OnDownloadFinished", 0x6, System.Delegate(class, out.Slipe.Client.Sounds.Events.OnDownloadFinishedEventArgs, System.Void) },
+            { "OnStart", 0x6, System.Delegate(class, out.Slipe.Client.Sounds.Events.OnStartEventArgs, System.Void) },
+            { "OnStop", 0x6, System.Delegate(class, out.Slipe.Client.Sounds.Events.OnStopEventArgs, System.Void) },
+            { "OnStream", 0x6, System.Delegate(class, out.Slipe.Client.Sounds.Events.OnStreamEventArgs, System.Void) }
+          },
+          class = { 0x6, System.new(out.Slipe.Shared.Elements.DefaultElementClassAttribute, 2, 28 --[[ElementType.Sound]]) }
+        }
+      end
     }
+    return class
   end)
 end)

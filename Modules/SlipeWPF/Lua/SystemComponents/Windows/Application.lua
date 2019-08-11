@@ -24,13 +24,15 @@ local function CreateWpfElement(xmlElement)
 	local wpfElement = controlClass()
 	wpfElement:LoadXaml(xmlElement)
 	for key, value in pairs(xmlElement.attributes) do
-		if wpfElement["set" .. key] ~= nil then
-			if wpfElement["get" .. key] == nil or wpfElement["get" .. key](wpfElement) == nil then
-				wpfElement["set" .. key](wpfElement, value)
+		if (key ~= "values") then
+			if wpfElement["set" .. key] ~= nil then
+				if wpfElement["get" .. key] == nil or wpfElement["get" .. key](wpfElement) == nil then
+					wpfElement["set" .. key](wpfElement, value)
+				end
+			else
+				outputDebugString(key .. " is an unsupported WPF attribute on " .. name)
+				-- wpfElement[key] = value
 			end
-		else
-			outputDebugString(key .. " is an unsupported WPF attribute on " .. name)
-			-- wpfElement[key] = value
 		end
 	end
 

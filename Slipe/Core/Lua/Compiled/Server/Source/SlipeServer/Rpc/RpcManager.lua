@@ -3,29 +3,40 @@ local System = System
 local SlipeMtaDefinitions
 local SlipeServerElements
 local SlipeServerPeds
+local SlipeServerRpc
 local SlipeSharedElements
-local DictStringDelegate
+local SlipeSharedRpc
+local DictStringRegisteredRpc
 System.import(function (out)
   SlipeMtaDefinitions = Slipe.MtaDefinitions
   SlipeServerElements = Slipe.Server.Elements
   SlipeServerPeds = Slipe.Server.Peds
+  SlipeServerRpc = Slipe.Server.Rpc
   SlipeSharedElements = Slipe.Shared.Elements
-  DictStringDelegate = System.Dictionary(System.String, System.Delegate)
+  SlipeSharedRpc = Slipe.Shared.Rpc
+  DictStringRegisteredRpc = System.Dictionary(System.String, SlipeServerRpc.RegisteredRpc)
 end)
 System.namespace("Slipe.Server.Rpc", function (namespace)
   -- <summary>
   -- Manager class that handles RPC's between server and clients
   -- </summary>
   namespace.class("RpcManager", function (namespace)
-    local instance, getInstance, RegisterRPC, TriggerRPC, TriggerRPC1, class, __ctor__
+    local instance, getInstance, RegisterRPC, TriggerRPC, TriggerRPC1, TriggerLatentRPC, TriggerLatentRPC1, class, 
+    __ctor__
     __ctor__ = function (this)
-      this.RegisteredRPCs = DictStringDelegate()
+      this.RegisteredRPCs = DictStringRegisteredRpc()
 
       SlipeServerElements.RootElement.OnMiscelaniousEvent = SlipeServerElements.RootElement.OnMiscelaniousEvent + function (eventName, source, p1, p2, p3, p4, p5, p6, p7, p8)
         if this.RegisteredRPCs:ContainsKey(eventName) then
-          local element = SlipeSharedElements.ElementManager.getInstance():GetElement(source)
-          local player = System.cast(SlipeServerPeds.Player, element)
-          this.RegisteredRPCs:get(eventName)(player, p1)
+          local player = SlipeSharedElements.ElementManager.getInstance():GetElement(source, SlipeServerPeds.Player)
+
+          local registeredRpc = this.RegisteredRPCs:get(eventName)
+
+          local method = registeredRpc.callback
+
+          local rpc = System.cast(SlipeSharedRpc.IRpc, System.Activator.CreateInstance(registeredRpc.type))
+          rpc:Parse(p1)
+          method(player, rpc)
         end
       end
     end
@@ -39,9 +50,9 @@ System.namespace("Slipe.Server.Rpc", function (namespace)
     -- Register an RPC
     -- </summary>
     RegisterRPC = function (this, key, callback, CallbackType)
-      this.RegisteredRPCs:set(key, function (player, parameters)
-        callback(player, CallbackType(parameters))
-      end)
+      this.RegisteredRPCs:set(key, System.new(SlipeServerRpc.RegisteredRpc, 2, function (player, parameters)
+        callback(player, System.cast(CallbackType, parameters), CallbackType)
+      end, System.typeof(CallbackType)))
       SlipeMtaDefinitions.MtaShared.AddEvent(key, true)
       SlipeSharedElements.Element.getRoot():ListenForEvent(key, true, "normal")
     end
@@ -57,13 +68,74 @@ System.namespace("Slipe.Server.Rpc", function (namespace)
     TriggerRPC1 = function (this, key, argument)
       SlipeMtaDefinitions.MtaServer.TriggerClientEvent(SlipeSharedElements.Element.getRoot():getMTAElement(), key, SlipeSharedElements.Element.getRoot():getMTAElement(), argument)
     end
+    -- <summary>
+    -- Trigger an RPC with limited bandwidth
+    -- </summary>
+    TriggerLatentRPC = function (this, target, key, bandwidth, argument, persists)
+      SlipeMtaDefinitions.MtaServer.TriggerLatentClientEvent(target:getMTAElement(), key, bandwidth, persists, SlipeSharedElements.Element.getRoot():getMTAElement(), argument)
+    end
+    -- <summary>
+    -- Trigger an RPC with limited bandwidth
+    -- </summary>
+    TriggerLatentRPC1 = function (this, key, bandwidth, argument, persists)
+      SlipeMtaDefinitions.MtaServer.TriggerLatentClientEvent(SlipeSharedElements.Element.getRoot():getMTAElement(), key, bandwidth, persists, SlipeSharedElements.Element.getRoot():getMTAElement(), argument)
+    end
     class = {
       getInstance = getInstance,
       RegisterRPC = RegisterRPC,
       TriggerRPC = TriggerRPC,
       TriggerRPC1 = TriggerRPC1,
-      __ctor__ = __ctor__
+      TriggerLatentRPC = TriggerLatentRPC,
+      TriggerLatentRPC1 = TriggerLatentRPC1,
+      __ctor__ = __ctor__,
+      __metadata__ = function (out)
+        return {
+          fields = {
+            { "instance", 0x9, class },
+            { "RegisteredRPCs", 0x1, System.Dictionary(System.String, out.Slipe.Server.Rpc.RegisteredRpc) }
+          },
+          properties = {
+            { "Instance", 0x20E, class, getInstance }
+          },
+          methods = {
+            { ".ctor", 0x1, nil },
+            { "RegisterRPC", 0x10206, RegisterRPC, function (CallbackType) return System.String, System.Delegate(out.Slipe.Server.Peds.Player, CallbackType, System.Void) end },
+            { "TriggerLatentRPC", 0x506, TriggerLatentRPC, out.Slipe.Server.Peds.Player, System.String, System.Int32, out.Slipe.Shared.Rpc.IRpc, System.Boolean },
+            { "TriggerLatentRPC", 0x406, TriggerLatentRPC1, System.String, System.Int32, out.Slipe.Shared.Rpc.IRpc, System.Boolean },
+            { "TriggerRPC", 0x306, TriggerRPC, out.Slipe.Server.Peds.Player, System.String, out.Slipe.Shared.Rpc.IRpc },
+            { "TriggerRPC", 0x206, TriggerRPC1, System.String, out.Slipe.Shared.Rpc.IRpc }
+          },
+          class = { 0x6 }
+        }
+      end
     }
     return class
+  end)
+
+  namespace.struct("RegisteredRpc", function (namespace)
+    local __ctor1__, __ctor2__
+    __ctor1__ = function (this)
+    end
+    __ctor2__ = function (this, callback, type)
+      this.callback = callback
+      this.type = type
+    end
+    return {
+      __ctor__ = {
+        __ctor1__,
+        __ctor2__
+      },
+      __metadata__ = function (out)
+        return {
+          fields = {
+            { "callback", 0x6, System.Delegate(out.Slipe.Server.Peds.Player, out.Slipe.Shared.Rpc.IRpc, System.Void) },
+            { "type", 0x6, System.Type }
+          },
+          methods = {
+            { ".ctor", 0x206, __ctor2__, System.Delegate(out.Slipe.Server.Peds.Player, out.Slipe.Shared.Rpc.IRpc, System.Void), System.Type }
+          }
+        }
+      end
+    }
   end)
 end)

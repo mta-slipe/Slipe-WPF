@@ -10,7 +10,7 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    public class WpfGuiTab: Gui.Tab
+    internal class WpfGuiTab: Gui.Tab
     {
         public WpfGuiTab(TabItem item, Gui.GuiElement parent) 
             : base(
