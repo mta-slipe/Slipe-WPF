@@ -18,4 +18,8 @@ createProperties(Selector,{
 	"SelectedValuePath",
 })
 
+createEvents(Selector,{
+	"SelectionChanged"
+})
+
 System.define("System.Windows.Controls.Selector", Selector)

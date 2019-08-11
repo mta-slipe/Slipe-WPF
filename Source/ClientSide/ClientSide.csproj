@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cd ..\..\ &amp;&amp; slipe compile -client-only" />
+    <Exec Command="cd ..\..\ &amp;&amp; slipe compile -client-only -generated" />
   </Target>
 
   <ItemGroup>

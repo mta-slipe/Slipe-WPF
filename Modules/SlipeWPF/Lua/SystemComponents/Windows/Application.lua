@@ -9,7 +9,7 @@ Application.RegisterControlNamespace = function(namespace)
 	controlNamespaces[#controlNamespaces + 1] = namespace
 end
 
-local function CreateWpfElement(xmlElement)
+local function CreateWpfElement(xmlElement, parent)
 	local name = xmlElement:getName()
 	local controlClass
 	for _, namespace in pairs(controlNamespaces) do
@@ -22,6 +22,8 @@ local function CreateWpfElement(xmlElement)
 		System.throw(System.Exception(name .. " is an unsupported WPF element"))
 	end
 	local wpfElement = controlClass()
+	parent.children[#parent.children + 1] = wpfElement
+	wpfElement:setParent(parent)
 	wpfElement:LoadXaml(xmlElement)
 	for key, value in pairs(xmlElement.attributes) do
 		if (key ~= "values") then
@@ -50,8 +52,7 @@ local function getXamlFilePath(uri)
 end
 
 local function CreateWpfNodes(component, xmlElement, i, parent)
-	local wpfElement = CreateWpfElement(xmlElement)
-	parent.children[#parent.children + 1] = wpfElement
+	local wpfElement = CreateWpfElement(xmlElement, parent)
 	if (xmlElement:GetAttribute("x:Name") ~= nil) then
 		component:Connect(i, wpfElement)
 		i = i + 1

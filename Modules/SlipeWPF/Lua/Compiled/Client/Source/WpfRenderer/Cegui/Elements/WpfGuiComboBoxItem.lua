@@ -8,14 +8,9 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
   namespace.class("WpfGuiComboBoxItem", function (namespace)
     local __ctor__
     __ctor__ = function (this, box, parent)
-      SlipeClientGui.ComboBoxItem.__ctor__(this, System.cast(System.String, box:getContent()), System.cast(SlipeClientGui.ComboBox, parent))
+      (System.as(parent, SlipeClientGui.ComboBox)):AddItem(System.cast(System.String, box:getContent()))
     end
     return {
-      __inherits__ = function (out)
-        return {
-          out.Slipe.Client.Gui.ComboBoxItem
-        }
-      end,
       __ctor__ = __ctor__,
       __metadata__ = function (out)
         return {

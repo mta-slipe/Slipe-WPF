@@ -36,6 +36,12 @@ namespace WpfCoreTest
             this.button.Content = text;
         }
 
+        public void SetSelectedItem()
+        {
+            this.comboBox.SelectedValue = "ComboBoxItem 2";
+            //this.comboBox.SelectedItem = VisualTreeHelper.GetChild(this.comboBox, 1);
+        }
+
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -45,6 +51,16 @@ namespace WpfCoreTest
         {
             ChatBox.WriteLine(string.Format("Text value is: {0}", textBox.Text), 0xff00ff);
             textBox.Text = "";
+        }
+
+        private void CheckBox_Copy_Checked(object sender, RoutedEventArgs e)
+        {
+            ChatBox.WriteLine($"Checkbox: {checkBox_Copy.IsChecked}");
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ChatBox.WriteLine($"Combo box: {comboBox.SelectedValue}");
         }
     }
 }

@@ -40,7 +40,11 @@ namespace ClientSide
                 {
                     return;
                 }
-                //window.SetButtonText(arguments[0]);
+                window.SetButtonText(arguments[0]);
+            });
+            new CommandHandler("wpfcombo", (string command, string[] arguments) =>
+            {
+                window.SetSelectedItem();
             });
         }
     }

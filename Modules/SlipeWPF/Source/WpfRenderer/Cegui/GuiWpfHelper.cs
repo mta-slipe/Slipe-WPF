@@ -1,4 +1,5 @@
-﻿using Slipe.Shared.IO;
+﻿using Slipe.Client.IO;
+using Slipe.Shared.IO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,6 +63,7 @@ namespace WpfRenderer.Cegui
             for (int i = 0; i < childrenCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(wpfElement, i);
+                ChatBox.WriteLine(child.GetType().Name);
                 if (child is Button)
                 {
                     new WpfGuiButton((Button)child, guiElement);
@@ -98,14 +100,6 @@ namespace WpfRenderer.Cegui
                 {
                     new WpfGuiTab((TabItem)child, guiElement);
                 }
-                else if (child is ListBox)
-                {
-                    new WpfGuiList((ListBox)child, guiElement);
-                }
-                else if (child is ListBoxItem)
-                {
-                    new WpfGuiListItem((ListBoxItem)child, guiElement);
-                }
                 else if (child is ComboBox)
                 {
                     new WpfGuiComboBox((ComboBox)child, guiElement);
@@ -113,6 +107,14 @@ namespace WpfRenderer.Cegui
                 else if (child is ComboBoxItem)
                 {
                     new WpfGuiComboBoxItem((ComboBoxItem)child, guiElement);
+                }
+                else if (child is ListBox)
+                {
+                    new WpfGuiList((ListBox)child, guiElement);
+                }
+                else if (child is ListBoxItem)
+                {
+                    new WpfGuiListItem((ListBoxItem)child, guiElement);
                 }
                 else if (child is RadioButton)
                 {

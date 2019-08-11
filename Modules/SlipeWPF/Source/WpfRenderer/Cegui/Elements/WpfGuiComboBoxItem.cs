@@ -1,4 +1,5 @@
-﻿using Slipe.Shared.IO;
+﻿using Slipe.Client.IO;
+using Slipe.Shared.IO;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -9,14 +10,12 @@ using Gui = Slipe.Client.Gui;
 
 namespace WpfRenderer.Cegui.Elements
 {
-    internal class WpfGuiComboBoxItem: Gui.ComboBoxItem
+    internal class WpfGuiComboBoxItem
     {
         public WpfGuiComboBoxItem(ComboBoxItem box, Gui.GuiElement parent)
-            : base(
-                (string) box.Content,
-                (Gui.ComboBox)parent
-            )
         {
+
+            (parent as Gui.ComboBox).AddItem((string)box.Content);
         }
     }
 }

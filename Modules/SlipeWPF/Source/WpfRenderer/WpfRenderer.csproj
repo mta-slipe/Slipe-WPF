@@ -20,4 +20,8 @@
     <Folder Include="Cef\" />
     <Folder Include="Dx\" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="cd ..\..\..\..\ &amp;&amp; slipe compile -module SlipeWPF -generated -client-only" />
+  </Target>
 </Project>

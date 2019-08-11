@@ -1,4 +1,5 @@
-﻿using Slipe.Shared.IO;
+﻿using Slipe.Client.IO;
+using Slipe.Shared.IO;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -22,6 +23,32 @@ namespace WpfRenderer.Cegui.Elements
             )
         {
             GuiWpfHelper.AttachHandlers(this, box);
+
+
+            this.OnClick += (source, args) =>
+            {
+                /*[[
+                if box:getIsChecked() == this:getSelected() then
+                    return
+                end
+                box:setIsChecked(this:getSelected())
+                if box.Checked then
+                    box:Checked(this, System.Windows.RoutedEventArgs());
+                end
+                ]]*/
+            };
+
+            /*[[
+            box:addIsCheckedChanged(System.fn(this, UpdateIsChecked))
+            ]]*/
+        }
+
+        private void UpdateIsChecked(bool isChecked)
+        {
+            if (this.Selected != isChecked)
+            {
+                this.Selected = isChecked;
+            }
         }
     }
 }

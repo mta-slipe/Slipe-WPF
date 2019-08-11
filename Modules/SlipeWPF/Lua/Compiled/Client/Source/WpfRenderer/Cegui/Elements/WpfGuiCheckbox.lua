@@ -10,10 +10,28 @@ System.import(function (out)
 end)
 System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
   namespace.class("WpfGuiCheckbox", function (namespace)
-    local __ctor__
+    local UpdateIsChecked, __ctor__
     __ctor__ = function (this, box, parent)
       SlipeClientGui.CheckBox.__ctor__[2](this, SystemNumerics.Vector2(System.ToSingle(box:getMargin():getLeft()), System.ToSingle(box:getMargin():getTop())), SystemNumerics.Vector2(System.ToSingle(box:getWidth()), System.ToSingle(box:getHeight())), System.cast(System.String, box:getContent()), (box:getIsChecked() or false), false, parent)
       WpfRendererCegui.GuiWpfHelper.AttachHandlers(this, box)
+
+
+      this.OnClick = this.OnClick + function (source, args)
+        if box:getIsChecked() == this:getSelected() then
+            return
+        end
+        box:setIsChecked(this:getSelected())
+        if box.Checked then
+            box:Checked(this, System.Windows.RoutedEventArgs());
+        end
+      end
+
+      box:addIsCheckedChanged(System.fn(this, UpdateIsChecked))
+    end
+    UpdateIsChecked = function (this, isChecked)
+      if this:getSelected() ~= isChecked then
+        this:setSelected(isChecked)
+      end
     end
     return {
       __inherits__ = function (out)
@@ -25,7 +43,8 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
       __metadata__ = function (out)
         return {
           methods = {
-            { ".ctor", 0x206, nil, System.Windows.Controls.CheckBox, out.Slipe.Client.Gui.GuiElement }
+            { ".ctor", 0x206, nil, System.Windows.Controls.CheckBox, out.Slipe.Client.Gui.GuiElement },
+            { "UpdateIsChecked", 0x101, UpdateIsChecked, System.Boolean }
           },
           class = { 0x4 }
         }

@@ -14,7 +14,7 @@
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="159" Margin="10,50,0,0" VerticalAlignment="Top" Width="431">
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5">
-                    <CheckBox x:Name="checkBox_Copy" Content="CheckBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="checkBox_Copy" Content="CheckBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckBox_Copy_Checked"/>
                     <CheckBox x:Name="checkBox" Content="CheckBox" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top"/>
                     <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="111" VerticalAlignment="Top" Width="165" Margin="250,10,0,0">
                         <ListBoxItem Content="ListBoxItem 1"/>
@@ -23,7 +23,7 @@
                         <ListBoxItem Content="ListBoxItem 4 "/>
                         <ListBoxItem Content="ListBoxItem 5"/>
                     </ListBox>
-                    <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="10,50,0,0">
+                    <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="171" Margin="10,50,0,0" SelectionChanged="ComboBox_SelectionChanged" SelectedIndex="0">
                         <ComboBoxItem Content="ComboBoxItem 1" HorizontalAlignment="Left" Width="118"/>
                         <ComboBoxItem Content="ComboBoxItem 2" HorizontalAlignment="Left" Width="118"/>
                         <ComboBoxItem Content="ComboBoxItem 3" HorizontalAlignment="Left" Width="118"/>

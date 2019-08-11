@@ -16,4 +16,8 @@ createProperties(ToggleButton, {
 	"IsChecked",
 })
 
+createEvents(ToggleButton, {
+	"Checked",
+})
+
 System.define("System.Windows.Controls.ToggleButton", ToggleButton)
