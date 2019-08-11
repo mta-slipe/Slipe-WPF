@@ -62,5 +62,10 @@ namespace WpfCoreTest
         {
             ChatBox.WriteLine($"Combo box: {comboBox.SelectedValue}");
         }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            ChatBox.WriteLine($"RadioButton: {radioButton.IsChecked}");
+        }
     }
 }

@@ -63,7 +63,6 @@ namespace WpfRenderer.Cegui
             for (int i = 0; i < childrenCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(wpfElement, i);
-                ChatBox.WriteLine(child.GetType().Name);
                 if (child is Button)
                 {
                     new WpfGuiButton((Button)child, guiElement);

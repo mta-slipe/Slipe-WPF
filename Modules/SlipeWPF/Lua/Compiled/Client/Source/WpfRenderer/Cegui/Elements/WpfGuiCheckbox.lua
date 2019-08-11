@@ -18,9 +18,10 @@ System.namespace("WpfRenderer.Cegui.Elements", function (namespace)
 
       this.OnClick = this.OnClick + function (source, args)
         if box:getIsChecked() == this:getSelected() then
-            return
+          return
         end
         box:setIsChecked(this:getSelected())
+
         if box.Checked then
             box:Checked(this, System.Windows.RoutedEventArgs());
         end

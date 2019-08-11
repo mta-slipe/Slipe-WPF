@@ -28,7 +28,7 @@
                         <ComboBoxItem Content="ComboBoxItem 2" HorizontalAlignment="Left" Width="118"/>
                         <ComboBoxItem Content="ComboBoxItem 3" HorizontalAlignment="Left" Width="118"/>
                     </ComboBox>
-                    <RadioButton x:Name="radioButton" Content="RadioButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,77,0,0"/>
+                    <RadioButton x:Name="radioButton" Content="RadioButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,77,0,0" Checked="RadioButton_Checked"/>
                     <RadioButton x:Name="radioButton1" Content="RadioButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,97,0,0"/>
                 </Grid>
             </TabItem>
