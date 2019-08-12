@@ -8,12 +8,13 @@ Slipe WPF is still a an experimental stage.
 
 First you will need to add the SlipeWPF module to your project, you can do this with: `slipe import-module https://mta-slipe.com/downloads/SlipeWPF.zip`
 
+Once you've imported the module to your project you can create a new WPF project (.NET Core) project in your solution. If you wish to use the graphical WPF editor make sure you're running the Visual Studio 2019 **Preview version**.
+
+Once you've added your project you need to add it to your `.slipe` file.  you can do this with `slipe add-project` or manually by modifying the `.slipe` file (It's a json file). Once you've added the project will need to manually modify the `.slipe` file to add `"BlockEntryPoint": true` to the project in the `"compileTargets"` part of the slipe file. An example for this setup can be found in [our sample login resource](https://github.com/mta-slipe/slipe-login)
+
 ## Compiling
-
-When compiling the Slipe WPF module it's important to include the `-generated` option in the compile command. Otherwise generated `.g.cs` will not be included. For example:  
+When compiling a WPF project with slipe it's important to include the `-generated` option in the compile command. Otherwise generated `.g.cs` will not be included. For example:  
 `slipe compile -module SlipeWPF -client-only -generated`
-
-Also, you will need to to mark your WPF project project as `"BlockEntryPoint": true` in your `.slipe` file.
 
 ## What's implemented
 Since WPF as a library is huge we have not implemented every single control and method, or even every approach to the frameorok. 
